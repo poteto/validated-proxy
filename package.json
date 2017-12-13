@@ -1,0 +1,11 @@
+{
+  "name": "validated-proxy",
+  "version": "0.0.0",
+  "description": "Validated proxy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lauren Tan <arr@sugarpirate.com> (http://www.sugarpirate.com)",
+  "license": "MIT"
+}
