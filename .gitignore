@@ -1,0 +1,14 @@
+# typescript
+dist
+
+# dependencies
+/node_modules
+/bower_components
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage/*
+/libpeerconnection.log
+npm-debug.log*
+yarn-error.log

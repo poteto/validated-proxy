@@ -2,10 +2,29 @@
   "name": "validated-proxy",
   "version": "0.0.0",
   "description": "Validated proxy",
-  "main": "index.js",
+  "main": "dist/validated-proxy.umd.js",
+  "module": "dist/validated-proxy.es5.js",
+  "typings": "dist/types/validated-proxy.d.ts",
   "scripts": {
+    "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
+    "prebuild": "rimraf dist",
+    "build": "tsc && tsc --module commonjs --outDir dist/es && rollup -c rollup.config.ts && rimraf compiled",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Lauren Tan <arr@sugarpirate.com> (http://www.sugarpirate.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "lodash.camelcase": "^4.3.0",
+    "mocha": "^4.0.1",
+    "prettier": "^1.9.2",
+    "rimraf": "^2.6.2",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "tslint": "^5.8.0",
+    "tslint-config-airbnb": "^5.4.2",
+    "tslint-config-prettier": "^1.6.0",
+    "typescript": "^2.6.2"
+  }
 }
