@@ -1,17 +1,17 @@
 export default class ValidationResult {
-  validation: boolean;
-  message: string;
+  public message: string;
+  private validation: boolean;
 
   constructor(validation: boolean, message: string) {
     this.validation = validation;
     this.message = message;
   }
 
-  get isValid() {
+  get isValid(): boolean {
     return this.validation === true;
   }
 
-  get isInvalid() {
+  get isInvalid(): boolean {
     return !this.isValid;
   }
 }
