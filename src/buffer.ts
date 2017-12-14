@@ -1,13 +1,16 @@
+import { BufferExecutionHandler } from './interfaces/lib/buffer';
+
 const { assign } = Object;
 
 export default class Buffer {
+  public executionHandler: BufferExecutionHandler;
   private target: object;
-  private changes: object;
+  private changes: object = {};
   [key: string]: any;
 
-  constructor(target: object) {
+  constructor(target: object, executionHandler = assign) {
     this.target = target;
-    this.changes = {};
+    this.executionHandler = executionHandler;
   }
 
   public set<T>(key: PropertyKey, value: T): T {
@@ -15,7 +18,11 @@ export default class Buffer {
     return value;
   }
 
+  public get(key: PropertyKey) {
+    return this.changes[key] || this.target[key];
+  }
+
   public execute(): object {
-    return assign(this.target, this.changes);
+    return this.executionHandler(this.target, this.changes);
   }
 }

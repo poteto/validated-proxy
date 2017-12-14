@@ -7,9 +7,7 @@ describe('it proxies set', () => {
   it('sets value on buffer if valid', () => {
     const original = { foo: 1 };
     const proxy = validatedProxy(original, {
-      validations: {
-        foo: validatePresence()
-      }
+      validations: { foo: validatePresence() }
     });
     proxy.foo = 'hello';
     expect(original.foo).toBe(1);
@@ -20,9 +18,7 @@ describe('it proxies set', () => {
   it('does not set value on buffer if invalid', () => {
     const original = { foo: 1 };
     const proxy = validatedProxy(original, {
-      validations: {
-        foo: validatePresence()
-      }
+      validations: { foo: validatePresence() }
     });
     proxy.foo = null;
     expect(original.foo).toBe(1);
