@@ -3,7 +3,7 @@ const { assign } = Object;
 export default class Buffer {
   private target: object;
   private changes: object;
-  [propName: string]: any;
+  [key: string]: any;
 
   constructor(target: object) {
     this.target = target;
