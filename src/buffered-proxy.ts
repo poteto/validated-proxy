@@ -1,7 +1,7 @@
-import { BufferExecutionHandler, IBufferErrors } from './interfaces/lib/buffer';
+import { BufferExecutionHandler, IBufferErrors } from './interfaces/lib/buffered-proxy';
 import hasOwnProperty from './lib/has-own-property';
 
-export default class Buffer {
+export default class BufferedProxy {
   public executionHandler: BufferExecutionHandler;
   private target: object;
   private ['__changes__']: object = Object.create(null);
