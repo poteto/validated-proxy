@@ -39,3 +39,35 @@ describe('#execute', () => {
     expect(spy.calledOnce).toBeTruthy();
   });
 });
+
+describe('#setError', () => {
+  it('stores error internally', () => {
+    const original = { foo: 1 };
+    const buffer = new Buffer(original);
+    buffer.setError('foo', 'abc', 'must be numbers');
+    expect(buffer.get('foo')).toEqual({
+      message: 'must be numbers',
+      value: 'abc'
+    });
+  });
+});
+
+describe('get changes', () => {
+  it('returns changes', () => {
+    const original = { foo: 1 };
+    const buffer = new Buffer(original);
+    buffer.set('foo', 'abc');
+    expect(buffer.changes).toEqual({ foo: 'abc' });
+  });
+});
+
+describe('get errors', () => {
+  it('returns errors', () => {
+    const original = { foo: 1 };
+    const buffer = new Buffer(original);
+    buffer.setError('foo', 'abc', 'must be numbers');
+    expect(buffer.errors).toEqual({
+      foo: { value: 'abc', message: 'must be numbers' }
+    });
+  });
+});
