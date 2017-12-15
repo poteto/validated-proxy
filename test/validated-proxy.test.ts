@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import validatedProxy from '../src/validated-proxy';
 import validatePresence from './support/validate-presence';
 
-describe('it proxies set', () => {
+describe('when setting a value on the proxy', () => {
   it('sets value on buffer if valid', () => {
     const original = { foo: 1 };
     const proxy = validatedProxy(original, {
@@ -22,6 +22,9 @@ describe('it proxies set', () => {
     });
     proxy.foo = null;
     expect(original.foo).toBe(1);
+    expect(proxy.errors).toEqual({
+      foo: { message: 'foo must be present', value: null }
+    });
     proxy.execute();
     expect(original.foo).toBe(1);
   });
