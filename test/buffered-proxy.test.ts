@@ -1,4 +1,3 @@
-import jsc from 'jsverify';
 import sinon from 'sinon';
 import BufferedProxy from '../src/buffered-proxy';
 import ValidationResult from '../src/validation-result';
@@ -8,10 +7,13 @@ describe('#set', () => {
     it('stores change internally', () => {
       const original = { foo: 1 };
       const buffer = new BufferedProxy(original);
-      buffer.set('foo', new ValidationResult('abc', {
-        message: '',
-        validation: true
-      }));
+      buffer.set(
+        'foo',
+        new ValidationResult('abc', {
+          message: '',
+          validation: true
+        })
+      );
       expect(buffer.get('foo')).toBe('abc');
     });
   });
@@ -20,10 +22,13 @@ describe('#set', () => {
     it('stores error internally', () => {
       const original = { foo: 1 };
       const buffer = new BufferedProxy(original);
-      buffer.set('foo', new ValidationResult('abc', {
-        message: 'must be numbers',
-        validation: false
-      }));
+      buffer.set(
+        'foo',
+        new ValidationResult('abc', {
+          message: 'must be numbers',
+          validation: false
+        })
+      );
       expect(buffer.get('foo')).toEqual({
         message: 'must be numbers',
         value: 'abc'
@@ -34,10 +39,13 @@ describe('#set', () => {
       const spy = sinon.spy();
       const original = { foo: 1 };
       const buffer = new BufferedProxy(original, { errorHandler: spy });
-      buffer.set('foo', new ValidationResult('abc', {
-        message: 'must be numbers',
-        validation: false
-      }));
+      buffer.set(
+        'foo',
+        new ValidationResult('abc', {
+          message: 'must be numbers',
+          validation: false
+        })
+      );
       expect(buffer.get('foo')).toEqual({
         message: 'must be numbers',
         value: 'abc'
@@ -47,21 +55,27 @@ describe('#set', () => {
   });
 });
 
-
 describe('#get', () => {
   it('returns error, cached or original value', () => {
     const original = { foo: 1, bar: 'abc', baz: [1, 2] };
     const buffer = new BufferedProxy(original);
     expect(buffer.get('foo')).toBe(1);
-    buffer.set('foo', new ValidationResult('abc', {
-      message: '',
-      validation: true
-    }));
-    buffer.set('bar', new ValidationResult(123, {
-      message: 'must be letters',
-      validation: false
-    }));
-    expect(buffer.get('bar')).toEqual({ // error
+    buffer.set(
+      'foo',
+      new ValidationResult('abc', {
+        message: '',
+        validation: true
+      })
+    );
+    buffer.set(
+      'bar',
+      new ValidationResult(123, {
+        message: 'must be letters',
+        validation: false
+      })
+    );
+    expect(buffer.get('bar')).toEqual({
+      // error
       message: 'must be letters',
       value: 123
     });
@@ -74,10 +88,13 @@ describe('#flush', () => {
   it('sets value', () => {
     const original = { foo: 1 };
     const buffer = new BufferedProxy(original);
-    buffer.set('foo', new ValidationResult('abc', {
-      message: '',
-      validation: true
-    }));
+    buffer.set(
+      'foo',
+      new ValidationResult('abc', {
+        message: '',
+        validation: true
+      })
+    );
     buffer.flush();
     expect(original.foo).toBe('abc');
   });
@@ -86,10 +103,13 @@ describe('#flush', () => {
     const spy = sinon.spy();
     const original = { foo: 1 };
     const buffer = new BufferedProxy(original, { executionHandler: spy });
-    buffer.set('foo', new ValidationResult('abc', {
-      message: '',
-      validation: true
-    }));
+    buffer.set(
+      'foo',
+      new ValidationResult('abc', {
+        message: '',
+        validation: true
+      })
+    );
     buffer.flush();
     expect(spy.calledOnce).toBeTruthy();
   });
@@ -99,14 +119,20 @@ describe('#reset', () => {
   it('resets all cached values', () => {
     const original = { foo: 1 };
     const buffer = new BufferedProxy(original);
-    buffer.set('foo', new ValidationResult('abc', {
-      message: '',
-      validation: true
-    }));
-    buffer.set('bar', new ValidationResult(123, {
-      message: 'must be letters',
-      validation: false
-    }));
+    buffer.set(
+      'foo',
+      new ValidationResult('abc', {
+        message: '',
+        validation: true
+      })
+    );
+    buffer.set(
+      'bar',
+      new ValidationResult(123, {
+        message: 'must be letters',
+        validation: false
+      })
+    );
     expect(buffer.get('foo')).toBe('abc');
     expect(buffer.get('bar')).toEqual({
       message: 'must be letters',
@@ -122,10 +148,13 @@ describe('getters', () => {
     it('returns changes', () => {
       const original = { foo: 1 };
       const buffer = new BufferedProxy(original);
-      buffer.set('foo', new ValidationResult('abc', {
-        message: '',
-        validation: true
-      }));
+      buffer.set(
+        'foo',
+        new ValidationResult('abc', {
+          message: '',
+          validation: true
+        })
+      );
       expect(buffer.changes).toEqual({ foo: 'abc' });
     });
   });
@@ -134,10 +163,13 @@ describe('getters', () => {
     it('returns errors', () => {
       const original = { foo: 1 };
       const buffer = new BufferedProxy(original);
-      buffer.set('foo', new ValidationResult('abc', {
-        message: 'must be numbers',
-        validation: false
-      }));
+      buffer.set(
+        'foo',
+        new ValidationResult('abc', {
+          message: 'must be numbers',
+          validation: false
+        })
+      );
       expect(buffer.errors).toEqual({
         foo: { value: 'abc', message: 'must be numbers' }
       });

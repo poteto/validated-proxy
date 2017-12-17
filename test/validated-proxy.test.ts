@@ -40,4 +40,3 @@ describe('when setting a value on the proxy', () => {
     expect(spy.calledOnce).toBeTruthy();
   });
 });
-

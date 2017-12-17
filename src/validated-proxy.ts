@@ -2,11 +2,10 @@ import BufferedProxy from './buffered-proxy';
 import { IValidatedProxyOptions } from './interfaces/index';
 import validatorLookup from './lib/validator-lookup';
 
-export default function validatedProxy(target: object, {
-  errorHandler,
-  executionHandler,
-  validations
-}: IValidatedProxyOptions) {
+export default function validatedProxy(
+  target: object,
+  { errorHandler, executionHandler, validations }: IValidatedProxyOptions
+) {
   const buffer = new BufferedProxy(target, {
     errorHandler,
     executionHandler

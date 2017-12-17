@@ -19,10 +19,10 @@ export default class BufferedProxy {
   private ['__errors__']: IBufferErrors = Object.create(null);
   [key: string]: any;
 
-  constructor(target: object, {
-    errorHandler,
-    executionHandler
-  }: IBufferOptions = {}) {
+  constructor(
+    target: object,
+    { errorHandler, executionHandler }: IBufferOptions = {}
+  ) {
     this.target = target;
     this.errorHandler = errorHandler || defaultErrorHandler;
     this.executionHandler = executionHandler || defaultExecutionHandler;

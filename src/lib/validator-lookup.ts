@@ -15,8 +15,9 @@ export const defaultValidator: IValidatorFunc = (key, value, _) => {
   });
 };
 
-export default function validatorLookup(validations: IValidationMap, key: PropertyKey): IValidatorFunc {
-  return isFunction(validations[key])
-    ? validations[key]
-    : defaultValidator;
+export default function validatorLookup(
+  validations: IValidationMap,
+  key: PropertyKey
+): IValidatorFunc {
+  return isFunction(validations[key]) ? validations[key] : defaultValidator;
 }
