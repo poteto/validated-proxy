@@ -1,3 +1,4 @@
+export type BufferErrorHandler = (message: string) => void;
 export type BufferExecutionHandler = (target: object, changes: object) => object;
 
 export interface IBufferError {
@@ -7,4 +8,9 @@ export interface IBufferError {
 
 export interface IBufferErrors {
   [key: string]: IBufferError;
+}
+
+export interface IBufferOptions {
+  errorHandler?: BufferErrorHandler;
+  executionHandler?: BufferExecutionHandler;
 }

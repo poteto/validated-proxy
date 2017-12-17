@@ -11,7 +11,7 @@ describe('when setting a value on the proxy', () => {
     });
     proxy.foo = 'hello';
     expect(original.foo).toBe(1);
-    proxy.execute();
+    proxy.flush();
     expect(original.foo).toBe('hello');
   });
 
@@ -25,7 +25,7 @@ describe('when setting a value on the proxy', () => {
     expect(proxy.errors).toEqual({
       foo: { message: 'foo must be present', value: null }
     });
-    proxy.execute();
+    proxy.flush();
     expect(original.foo).toBe(1);
   });
 

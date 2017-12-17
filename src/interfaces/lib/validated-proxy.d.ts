@@ -1,10 +1,8 @@
 import { IValidationMap } from '../index';
-import { BufferExecutionHandler } from './buffer';
-
-export type ErrorHandler = (message: string) => void;
+import { BufferErrorHandler, BufferExecutionHandler } from './buffered-proxy';
 
 export interface IValidatedProxyOptions {
-  bufferExecutionHandler?: BufferExecutionHandler;
-  errorHandler?: ErrorHandler;
+  executionHandler?: BufferExecutionHandler;
+  errorHandler?: BufferErrorHandler;
   validations: IValidationMap;
 }

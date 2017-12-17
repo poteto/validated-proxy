@@ -1,25 +1,21 @@
-import Buffer from './buffer';
+import BufferedProxy from './buffered-proxy';
 import { IValidatedProxyOptions } from './interfaces/index';
 import validatorLookup from './lib/validator-lookup';
 
-export default function validatedProxy(target: object, { validations, errorHandler, bufferExecutionHandler }: IValidatedProxyOptions) {
-  const buffer = new Buffer(target, bufferExecutionHandler);
+export default function validatedProxy(target: object, {
+  errorHandler,
+  executionHandler,
+  validations
+}: IValidatedProxyOptions) {
+  const buffer = new BufferedProxy(target, {
+    errorHandler,
+    executionHandler
+  });
   return new Proxy(buffer, {
     set(targetBuffer, property, value, receiver) {
-      const {
-        isValid,
-        isInvalid,
-        message
-      } = validatorLookup(validations, property)(property, value, target[property]);
-      if (isValid) {
-        targetBuffer.set(property, value);
-      }
-      if (isInvalid) {
-        targetBuffer.setError(property, value, message);
-        if (errorHandler) {
-          errorHandler(message);
-        }
-      }
+      const validate = validatorLookup(validations, property);
+      const result = validate(property, value, target[property]);
+      targetBuffer.set(property, result);
       return true;
     }
   });

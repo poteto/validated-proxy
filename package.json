@@ -39,7 +39,8 @@
       }
     },
     "collectCoverage": true,
-    "mapCoverage": true
+    "mapCoverage": true,
+    "coverageReporters": ["json", "lcov", "text", "html"]
   },
   "author": "Lauren Tan <arr@sugarpirate.com> (http://www.sugarpirate.com)",
   "license": "MIT",
