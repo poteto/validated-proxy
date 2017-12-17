@@ -11,11 +11,12 @@
   "scripts": {
     "build": "tsc && tsc --module commonjs --outDir dist/es && rollup -c rollup.config.ts && rimraf compiled",
     "build:docs": "typedoc --out docs --target es6 --theme minimal --mode file src",
+    "deploy:docs": "yarn run build:docs && gh-pages -d docs",
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
     "start": "tsc -w & rollup -c rollup.config.ts -w",
     "test": "jest",
-    "test:prod": "npm run lint && npm run test -- --coverage --no-cache",
+    "test:prod": "yarn run lint && yarn run test --coverage --no-cache",
     "test:watch": "jest --watch"
   },
   "jest": {
@@ -67,6 +68,7 @@
     "@types/node": "^8.0.58",
     "@types/sinon": "^4.1.2",
     "coveralls": "^3.0.0",
+    "gh-pages": "^1.1.0",
     "jasmine-check": "^1.0.0-rc.0",
     "jest": "^21.2.1",
     "lodash.camelcase": "^4.3.0",
