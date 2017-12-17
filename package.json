@@ -14,6 +14,7 @@
     "deploy:docs": "yarn run build:docs && gh-pages -d docs",
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
+    "prepublishOnly": "yarn run build",
     "start": "tsc -w & rollup -c rollup.config.ts -w",
     "test": "jest",
     "test:prod": "yarn run lint && yarn run test --coverage --no-cache",
