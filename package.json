@@ -40,7 +40,12 @@
     },
     "collectCoverage": true,
     "mapCoverage": true,
-    "coverageReporters": ["json", "lcov", "text", "html"]
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "html"
+    ]
   },
   "author": "Lauren Tan <arr@sugarpirate.com> (http://www.sugarpirate.com)",
   "license": "MIT",
@@ -61,6 +66,7 @@
     "@types/sinon": "^4.1.2",
     "coveralls": "^3.0.0",
     "jest": "^21.2.1",
+    "jsverify": "^0.8.3",
     "lodash.camelcase": "^4.3.0",
     "prettier": "^1.9.2",
     "rimraf": "^2.6.2",

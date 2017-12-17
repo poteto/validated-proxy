@@ -1,4 +1,3 @@
-/* tslint:disable:no-implicit-dependencies */
 import sinon from 'sinon';
 import validatedProxy from '../src/validated-proxy';
 import validatePresence from './support/validate-presence';

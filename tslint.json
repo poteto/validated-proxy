@@ -5,6 +5,7 @@
     "tslint-config-prettier"
   ],
   "rules": {
-    "import-name": false
+    "import-name": false,
+    "no-implicit-dependencies": [true, "dev"]
   }
 }

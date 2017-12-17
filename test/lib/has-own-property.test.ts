@@ -1,15 +1,16 @@
+import jsc from 'jsverify';
 import hasOwnProperty from '../../src/lib/has-own-property';
 
 describe('when property is present on object', () => {
   it('returns true', () => {
-    const o = { foo: 1 };
-    expect(hasOwnProperty(o, 'foo')).toBeTruthy();
+    const spec = { foo: jsc.nat };
+    expect(jsc.checkForall(jsc.record(spec), o => hasOwnProperty(o, 'foo'))).toBeTruthy();
   });
 });
 
 describe('when property is not present on object', () => {
   it('returns true', () => {
-    const o = {};
-    expect(hasOwnProperty(o, 'foo')).toBeFalsy();
+    const spec = { bar: jsc.nat };
+    expect(jsc.checkForall(jsc.record(spec), o => !hasOwnProperty(o, 'foo'))).toBeTruthy();
   });
 });

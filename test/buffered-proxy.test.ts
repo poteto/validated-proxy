@@ -1,4 +1,4 @@
-/* tslint:disable:no-implicit-dependencies */
+import jsc from 'jsverify';
 import sinon from 'sinon';
 import BufferedProxy from '../src/buffered-proxy';
 import ValidationResult from '../src/validation-result';
