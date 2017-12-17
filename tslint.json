@@ -4,7 +4,9 @@
     "tslint-eslint-rules",
     "tslint-config-prettier"
   ],
+  "rulesDirectory": ["tslint-plugin-prettier"],
   "rules": {
+    "prettier": [true, { "singleQuote": true }],
     "import-name": false,
     "no-implicit-dependencies": [true, "dev"]
   }
