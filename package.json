@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc && tsc --module commonjs --outDir dist/es && rollup -c rollup.config.ts && rimraf compiled",
+    "build": "tsc && tsc --module commonjs --outDir dist/es && rollup -c rollup.config.ts",
     "build:docs": "typedoc --out docs --target es6 --theme minimal --mode file src",
     "deploy:docs": "yarn run build:docs && gh-pages -d docs",
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
