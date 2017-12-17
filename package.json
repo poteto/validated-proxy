@@ -9,12 +9,14 @@
     "dist"
   ],
   "scripts": {
+    "build": "tsc && tsc --module commonjs --outDir dist/es && rollup -c rollup.config.ts && rimraf compiled",
+    "build:docs": "typedoc --out docs --target es6 --theme minimal --mode file src",
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
-    "build": "tsc && tsc --module commonjs --outDir dist/es && rollup -c rollup.config.ts && rimraf compiled",
+    "start": "tsc -w & rollup -c rollup.config.ts -w",
     "test": "jest",
-    "test:watch": "jest --watch",
-    "test:prod": "npm run lint && npm run test -- --coverage --no-cache"
+    "test:prod": "npm run lint && npm run test -- --coverage --no-cache",
+    "test:watch": "jest --watch"
   },
   "jest": {
     "transform": {
@@ -74,6 +76,7 @@
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
+    "shelljs": "^0.7.8",
     "sinon": "^4.1.3",
     "testcheck": "^1.0.0-rc.2",
     "ts-jest": "^21.2.4",
@@ -82,6 +85,7 @@
     "tslint-config-prettier": "^1.6.0",
     "tslint-eslint-rules": "^4.1.1",
     "tslint-plugin-prettier": "^1.3.0",
+    "typedoc": "^0.9.0",
     "typescript": "^2.6.2"
   }
 }
