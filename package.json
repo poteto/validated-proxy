@@ -1,6 +1,6 @@
 {
   "name": "validated-proxy",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Validated proxy",
   "main": "dist/validated-proxy.umd.js",
   "module": "dist/validated-proxy.es5.js",
