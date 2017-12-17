@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "tsc && tsc --module commonjs --outDir dist/es && rollup -c rollup.config.ts",
-    "build:docs": "typedoc --out docs --target es6 --mode file src",
+    "build:docs": "typedoc --includeDeclarations --excludeExternals --out docs --target es6 --mode file src ",
     "deploy:docs": "yarn run build:docs && gh-pages -d docs",
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
