@@ -11,6 +11,9 @@ export default function validatedProxy(
     executionHandler
   });
   return new Proxy(buffer, {
+    get(targetBuffer, property, receiver) {
+      return targetBuffer.get(property);
+    },
     set(targetBuffer, property, value, receiver) {
       const validate = validatorLookup(validations, property);
       const result = validate(property, value, target[property]);

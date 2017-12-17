@@ -1,8 +1,4 @@
-import {
-  IValidationMap,
-  IValidatorFactory,
-  IValidatorFunc
-} from '../interfaces/index';
+import { IValidationMap, IValidatorFunc } from '../interfaces/index';
 import ValidationResult from '../validation-result';
 import isFunction from './is-function';
 

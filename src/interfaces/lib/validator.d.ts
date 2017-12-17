@@ -5,9 +5,6 @@ export type IValidatorFunc = (
   newValue: any,
   oldValue: any
 ) => ValidationResult;
-export type IValidatorFactory = (
-  options?: IValidatorFactoryOptions
-) => IValidatorFunc;
 
 export interface IValidationMap {
   [key: string]: IValidatorFunc;

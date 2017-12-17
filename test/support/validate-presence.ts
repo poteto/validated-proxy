@@ -1,7 +1,7 @@
-import { IValidatorFactory, IValidatorFunc } from '../../src/interfaces/index';
+import { IValidatorFunc } from '../../src/interfaces/index';
 import ValidationResult from '../../src/validation-result';
 
-const validatePresence: IValidatorFactory = () => {
+const validatePresence = (): IValidatorFunc => {
   return (key, value) => {
     return new ValidationResult(value, {
       message: `${key} must be present`,

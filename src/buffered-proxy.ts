@@ -57,6 +57,9 @@ export default class BufferedProxy {
     if (hasOwnProperty(this.changes, key)) {
       return this.changes[key];
     }
+    if (hasOwnProperty(this, key) || this[key]) {
+      return this[key];
+    }
     return this.target[key];
   }
 
