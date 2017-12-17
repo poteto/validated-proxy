@@ -1,23 +1,18 @@
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
-import sourceMaps from 'rollup-plugin-sourcemaps';
 import camelCase from 'lodash.camelcase';
+import commonjs from 'rollup-plugin-commonjs';
+import resolve from 'rollup-plugin-node-resolve';
+import sourceMaps from 'rollup-plugin-sourcemaps';
 
 const pkg = require('./package.json');
 const libraryName = 'validated-proxy';
 
 export default {
+  external: [],
   input: `dist/es/${libraryName}.js`,
   output: [
     { file: pkg.main, name: camelCase(libraryName), format: 'umd' },
-    { file: pkg.module, format: 'es' },
+    { file: pkg.module, format: 'es' }
   ],
-  sourcemap: true,
-  // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
-  external: [],
-  watch: {
-    include: 'dist/es/**',
-  },
   plugins: [
     // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
     commonjs(),
@@ -27,6 +22,11 @@ export default {
     resolve(),
 
     // Resolve source maps to the original source
-    sourceMaps(),
-  ]
+    sourceMaps()
+  ],
+  sourcemap: true,
+  // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
+  watch: {
+    include: 'dist/es/**'
+  }
 };

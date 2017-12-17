@@ -1,10 +1,22 @@
-export default class ValidationResult {
-  public message: string;
-  private validation: boolean;
+import { IValidationMeta } from './interfaces/lib/validation-result';
 
-  constructor(validation: boolean, message: string) {
-    this.validation = validation;
-    this.message = message;
+export default class ValidationResult {
+  public key: PropertyKey;
+  public value: any;
+
+  private meta: IValidationMeta;
+
+  constructor(value: any, meta: IValidationMeta) {
+    this.value = value;
+    this.meta = meta;
+  }
+
+  get validation(): boolean {
+    return this.meta.validation;
+  }
+
+  get message(): string {
+    return this.meta.message;
   }
 
   get isValid(): boolean {

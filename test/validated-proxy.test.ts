@@ -1,31 +1,30 @@
-/* tslint:disable:no-implicit-dependencies */
 import sinon from 'sinon';
 import validatedProxy from '../src/validated-proxy';
-import validatePresence from './support/validate-presence';
+import validateTypeof from './support/validate-typeof';
 
 describe('when setting a value on the proxy', () => {
   it('sets value on buffer if valid', () => {
     const original = { foo: 1 };
     const proxy = validatedProxy(original, {
-      validations: { foo: validatePresence() }
+      validations: { foo: validateTypeof({ type: 'string' }) }
     });
     proxy.foo = 'hello';
     expect(original.foo).toBe(1);
-    proxy.execute();
+    proxy.flush();
     expect(original.foo).toBe('hello');
   });
 
   it('does not set value on buffer if invalid', () => {
     const original = { foo: 1 };
     const proxy = validatedProxy(original, {
-      validations: { foo: validatePresence() }
+      validations: { foo: validateTypeof({ type: 'string' }) }
     });
     proxy.foo = null;
     expect(original.foo).toBe(1);
     expect(proxy.errors).toEqual({
-      foo: { message: 'foo must be present', value: null }
+      foo: { message: "null is not of type 'string'", value: null }
     });
-    proxy.execute();
+    proxy.flush();
     expect(original.foo).toBe(1);
   });
 
@@ -34,11 +33,10 @@ describe('when setting a value on the proxy', () => {
     const original = { foo: 1 };
     const proxy = validatedProxy(original, {
       errorHandler: spy,
-      validations: { foo: validatePresence() }
+      validations: { foo: validateTypeof({ type: 'string' }) }
     });
     proxy.foo = null;
     expect(original.foo).toBe(1);
     expect(spy.calledOnce).toBeTruthy();
   });
 });
-
