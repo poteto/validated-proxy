@@ -1,4 +1,4 @@
-import { IValidatorFunc } from '../../src/interfaces/index';
+import { IValidatorFunc } from '../../src/utils/validator-lookup';
 import ValidationResult from '../../src/validation-result';
 
 type Primitive =

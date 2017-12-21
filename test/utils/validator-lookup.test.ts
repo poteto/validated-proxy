@@ -1,7 +1,7 @@
 import { check, gen, Generator, property } from 'testcheck';
-import { IValidatorFunc } from '../../src/interfaces';
 import validatorLookup, {
-  defaultValidatorMessage
+  defaultValidatorMessage,
+  IValidatorFunc
 } from '../../src/utils/validator-lookup';
 import ValidationResult from '../../src/validation-result';
 import validatePresence from '../support/validate-presence';

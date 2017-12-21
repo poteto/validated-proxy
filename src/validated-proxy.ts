@@ -1,6 +1,14 @@
-import BufferedProxy from './buffered-proxy';
-import { IValidatedProxyOptions } from './interfaces';
-import validatorLookup from './utils/validator-lookup';
+import BufferedProxy, {
+  BufferErrorHandler,
+  BufferExecutionHandler
+} from './buffered-proxy';
+import validatorLookup, { IValidationMap } from './utils/validator-lookup';
+
+export interface IValidatedProxyOptions {
+  executionHandler?: BufferExecutionHandler;
+  errorHandler?: BufferErrorHandler;
+  validations: IValidationMap;
+}
 
 /**
  * Wraps a target object with a `BufferedProxy`. Setters will first invoke a

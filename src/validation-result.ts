@@ -1,4 +1,10 @@
-import { IBufferChange, IBufferError, IValidationMeta } from './interfaces';
+import { IBufferChange, IBufferError } from './buffered-proxy';
+
+export interface IValidationMeta {
+  value: any;
+  validation: boolean;
+  message?: string;
+}
 
 /**
  * Wrapper class for post-validation changes to a `BufferedProxy`. All validator
