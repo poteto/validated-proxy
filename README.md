@@ -1,4 +1,4 @@
-# validated-proxy [![npm version](https://badge.fury.io/js/validated-proxy.svg)](https://badge.fury.io/js/validated-proxy) [![Build Status](https://travis-ci.org/poteto/validated-proxy.svg?branch=master)](https://travis-ci.org/poteto/validated-proxy)
+# validated-proxy [![npm version](https://badge.fury.io/js/validated-proxy.svg)](https://badge.fury.io/js/validated-proxy) [![Build Status](https://travis-ci.org/poteto/validated-proxy.svg?branch=master)](https://travis-ci.org/poteto/validated-proxy) [![Coverage Status](https://coveralls.io/repos/github/poteto/validated-proxy/badge.svg?branch=master)](https://coveralls.io/github/poteto/validated-proxy?branch=master)
 
 The idea behind a validated proxy is simple: it represents a set of valid changes to be applied onto any object. Each change is tested against an optional validation, and if valid, the change is stored and applied when executed.
 
