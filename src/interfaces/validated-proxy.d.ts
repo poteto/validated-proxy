@@ -1,5 +1,8 @@
-import { IValidationMap } from '../index';
-import { BufferErrorHandler, BufferExecutionHandler } from './buffered-proxy';
+import {
+  BufferErrorHandler,
+  BufferExecutionHandler,
+  IValidationMap
+} from './index';
 
 export interface IValidatedProxyOptions {
   executionHandler?: BufferExecutionHandler;

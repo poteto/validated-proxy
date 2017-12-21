@@ -1,4 +1,4 @@
-import { IValidationMeta } from './interfaces/lib/validation-result';
+import { IBufferChange, IBufferError, IValidationMeta } from './interfaces';
 
 /**
  * Wrapper class for post-validation changes to a `BufferedProxy`. All validator
@@ -15,31 +15,32 @@ export default class ValidationResult {
    */
   public key: PropertyKey;
 
-  /**
-   * The value that is being set on the `BufferedProxy`.
-   *
-   * ```ts
-   * buffer.set('name', 'Lauren', new ValidatedResult(\/* ... *\/));
-   * validatedResult.value; // 'Lauren'
-   * ```
-   */
-  public value: any;
-
   private meta: IValidationMeta;
 
   /**
    * Creates a new instance of `ValidationResult`.
    *
    * ```ts
-   * new ValidationResult(123, { message: 'must be a string', validation: false });
+   * new ValidationResult('name', { message: 'must be a string', validation: false, value: 123 });
    * ```
    *
    * @param value
    * @param meta
    */
-  constructor(value: any, meta: IValidationMeta) {
-    this.value = value;
+  constructor(key: PropertyKey, meta: IValidationMeta) {
+    this.key = key;
     this.meta = meta;
+  }
+
+  /**
+   * The value being validated.
+   *
+   * ```ts
+   * validatedResult.value; // 'Lauren'
+   * ```
+   */
+  public get value(): any {
+    return this.meta.value;
   }
 
   /**
@@ -49,7 +50,7 @@ export default class ValidationResult {
    * validationResult.validation; // true
    * ```
    */
-  get validation(): boolean {
+  public get validation(): boolean {
     return this.meta.validation;
   }
 
@@ -60,7 +61,7 @@ export default class ValidationResult {
    * validationResult.message; // 'key cannot be blank'
    * ```
    */
-  get message(): string {
+  public get message(): string {
     return this.meta.message;
   }
 
@@ -71,7 +72,7 @@ export default class ValidationResult {
    * validationResult.isValid; // true
    * ```
    */
-  get isValid(): boolean {
+  public get isValid(): boolean {
     return this.validation === true;
   }
 
@@ -82,7 +83,7 @@ export default class ValidationResult {
    * validationResult.isInvalid; // true
    * ```
    */
-  get isInvalid(): boolean {
-    return !this.isValid;
+  public get isInvalid(): boolean {
+    return this.validation === false;
   }
 }

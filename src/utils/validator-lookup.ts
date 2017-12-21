@@ -1,12 +1,13 @@
-import { IValidationMap, IValidatorFunc } from '../interfaces/index';
+import { IValidationMap, IValidatorFunc } from '../interfaces';
 import ValidationResult from '../validation-result';
 
 export const defaultValidatorMessage = 'No validator found';
 export const defaultValidatorValidation = true;
 export const defaultValidator: IValidatorFunc = (key, value, _) => {
-  return new ValidationResult(value, {
+  return new ValidationResult(key, {
     message: defaultValidatorMessage,
-    validation: defaultValidatorValidation
+    validation: defaultValidatorValidation,
+    value
   });
 };
 

@@ -15,9 +15,10 @@ interface IValidatorOptions {
 
 const validateTypeof = ({ type }: IValidatorOptions): IValidatorFunc => {
   return (key, value) =>
-    new ValidationResult(value, {
+    new ValidationResult(key, {
       message: `${value} is not of type '${type}'`,
-      validation: typeof value === type
+      validation: typeof value === type,
+      value
     });
 };
 

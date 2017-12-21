@@ -1,4 +1,4 @@
-import ValidationResult from '../../validation-result';
+import ValidationResult from '../validation-result';
 
 export type IValidatorFunc = (
   key: PropertyKey,
