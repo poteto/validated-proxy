@@ -8,7 +8,7 @@ const libraryName = 'validated-proxy';
 
 export default {
   external: [],
-  input: `dist/es/${libraryName}.js`,
+  input: `dist/es/index.js`,
   output: [
     { file: pkg.main, name: camelCase(libraryName), format: 'umd' },
     { file: pkg.module, format: 'es' }

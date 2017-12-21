@@ -6,7 +6,7 @@ import {
   IBufferError,
   IBufferOptions
 } from './interfaces';
-import hasOwnProperty from './lib/has-own-property';
+import hasOwnProperty from './utils/has-own-property';
 import ValidationResult from './validation-result';
 
 const defaultExecutionHandler = Object.assign;

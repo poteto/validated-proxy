@@ -1,4 +1,4 @@
-import { IValidationMap, IValidatorFunc } from '../interfaces/index';
+import { IValidationMap, IValidatorFunc } from '../interfaces';
 import ValidationResult from '../validation-result';
 
 export const defaultValidatorMessage = 'No validator found';

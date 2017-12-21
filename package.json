@@ -16,6 +16,7 @@
     "prebuild": "rimraf dist",
     "prepublishOnly": "yarn run build",
     "release": "release-it",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "start": "tsc -w & rollup -c rollup.config.ts -w",
     "test": "jest",
     "test:prod": "yarn run lint && yarn run test --coverage --no-cache",

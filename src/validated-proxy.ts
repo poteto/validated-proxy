@@ -1,6 +1,6 @@
 import BufferedProxy from './buffered-proxy';
 import { IValidatedProxyOptions } from './interfaces';
-import validatorLookup from './lib/validator-lookup';
+import validatorLookup from './utils/validator-lookup';
 
 /**
  * Wraps a target object with a `BufferedProxy`. Setters will first invoke a

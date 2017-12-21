@@ -1,16 +1,17 @@
 import { check, gen, Generator, property } from 'testcheck';
-import { IValidatorFunc } from '../../src/interfaces/index';
+import { IValidatorFunc } from '../../src/interfaces';
 import validatorLookup, {
   defaultValidatorMessage
-} from '../../src/lib/validator-lookup';
+} from '../../src/utils/validator-lookup';
 import ValidationResult from '../../src/validation-result';
 import validatePresence from '../support/validate-presence';
 
 const validationResultGen: Generator<IValidatorFunc> = gen.boolean.then(
   b => (key, value, _) =>
-    new ValidationResult(value, {
+    new ValidationResult(key, {
       message: `value is ${value}`,
-      validation: b
+      validation: b,
+      value
     })
 );
 

@@ -1,5 +1,5 @@
 import { check, gen, property } from 'testcheck';
-import hasOwnProperty from '../../src/lib/has-own-property';
+import hasOwnProperty from '../../src/utils/has-own-property';
 
 describe('when property is present on object', () => {
   it('returns true', () => {

@@ -2,7 +2,7 @@ import {
   BufferErrorHandler,
   BufferExecutionHandler,
   IValidationMap
-} from '../index';
+} from './index';
 
 export interface IValidatedProxyOptions {
   executionHandler?: BufferExecutionHandler;
