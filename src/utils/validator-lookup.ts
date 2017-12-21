@@ -1,5 +1,18 @@
-import { IValidationMap, IValidatorFunc } from '../interfaces';
 import ValidationResult from '../validation-result';
+
+export type IValidatorFunc = (
+  key: PropertyKey,
+  newValue: any,
+  oldValue: any
+) => ValidationResult;
+
+export interface IValidationMap {
+  [key: string]: IValidatorFunc;
+}
+
+export interface IValidatorFactoryOptions {
+  [key: string]: any;
+}
 
 export const defaultValidatorMessage = 'No validator found';
 export const defaultValidatorValidation = true;
