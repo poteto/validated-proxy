@@ -62,7 +62,66 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="validated-proxy">validated-proxy</h1>
+				<h1 id="validated-proxy-npm-version-https-badge-fury-io-js-validated-proxy-svg-https-badge-fury-io-js-validated-proxy-build-status-https-travis-ci-org-poteto-validated-proxy-svg-branch-master-https-travis-ci-org-poteto-validated-proxy-coverage-status-https-coveralls-io-repos-github-poteto-validated-proxy-badge-svg-branch-master-https-coveralls-io-github-poteto-validated-proxy-branch-master-">validated-proxy <a href="https://badge.fury.io/js/validated-proxy"><img src="https://badge.fury.io/js/validated-proxy.svg" alt="npm version"></a> <a href="https://travis-ci.org/poteto/validated-proxy"><img src="https://travis-ci.org/poteto/validated-proxy.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/github/poteto/validated-proxy?branch=master"><img src="https://coveralls.io/repos/github/poteto/validated-proxy/badge.svg?branch=master" alt="Coverage Status"></a></h1>
+				<p>The idea behind a validated proxy is simple: it represents a set of valid changes to be applied onto any object. Each change is tested against an optional validation, and if valid, the change is stored and applied when executed.</p>
+				<h2 id="getting-started">Getting started</h2>
+				<p>Install using <code>yarn</code>:</p>
+				<pre><code>yarn <span class="hljs-keyword">add</span><span class="bash"> validated-proxy</span>
+</code></pre><p>Or using <code>npm</code>:</p>
+				<pre><code>npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save validated-proxy</span>
+</code></pre><p>Then import it and create a new validated proxy:</p>
+				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> { validatedProxy } <span class="hljs-keyword">from</span> <span class="hljs-string">'validated-proxy'</span>;
+<span class="hljs-keyword">import</span> { validatePresence, validateLength, validateNumber } <span class="hljs-keyword">from</span> <span class="hljs-string">'../path/to/validators'</span>;
+
+<span class="hljs-keyword">const</span> user = {
+  name: <span class="hljs-string">'Billy Bob'</span>,
+  age: <span class="hljs-number">25</span>
+};
+<span class="hljs-keyword">const</span> bufferedProxy = validatedProxy(user, {
+  validations: {
+    name: [
+      validatePresence(<span class="hljs-literal">true</span>),
+      validateLength({ min: <span class="hljs-number">4</span> })
+    ],
+    age: [
+      validatePresence(<span class="hljs-literal">true</span>),
+      validateNumber({ gte: <span class="hljs-number">18</span> })
+    ]
+  }
+});
+bufferedProxy.name = <span class="hljs-string">'Michael Bolton'</span>;
+user.name; <span class="hljs-comment">// 'Billy Bob'</span>
+bufferedProxy.flush();
+user.name; <span class="hljs-comment">// 'Michael Bolton'</span>
+</code></pre>
+				<h2 id="custom-validators">Custom validators</h2>
+				<p>A validator is a higher order function that returns a validation function. The validator can pass options to the validation function. The validation function is the function that is invoked when you set a value on the <code>BufferedProxy</code>.</p>
+				<p>Here&#39;s a simple example of creating a validator that validates if a value is of a given <code>type</code>:</p>
+				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> { IValidatorFunc, ValidationResult } <span class="hljs-keyword">from</span> <span class="hljs-string">'validated-proxy'</span>;
+
+<span class="hljs-keyword">type</span> Primitive =
+  | <span class="hljs-string">'boolean'</span>
+  | <span class="hljs-string">'number'</span>
+  | <span class="hljs-string">'string'</span>
+  | <span class="hljs-string">'symbol'</span>
+  | <span class="hljs-string">'null'</span>
+  | <span class="hljs-string">'undefined'</span>;
+<span class="hljs-keyword">type</span> NonPrimitive = <span class="hljs-string">'object'</span>;
+<span class="hljs-keyword">interface</span> IValidatorOptions {
+  <span class="hljs-keyword">type</span>: Primitive | NonPrimitive;
+}
+
+<span class="hljs-keyword">const</span> validateTypeof = ({ <span class="hljs-keyword">type</span> }: IValidatorOptions): <span class="hljs-function"><span class="hljs-params">IValidatorFunc</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">key, value</span>) =&gt;</span>
+    <span class="hljs-keyword">new</span> ValidationResult(key, {
+      message: <span class="hljs-string">`<span class="hljs-subst">${value}</span> is not of type '<span class="hljs-subst">${type}</span>'`</span>,
+      validation: <span class="hljs-keyword">typeof</span> value === <span class="hljs-keyword">type</span>,
+      value
+    });
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> validateTypeof;
+</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -82,10 +141,13 @@
 						<a href="classes/validationresult.html" class="tsd-kind-icon">Validation<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/ibuffererror.html" class="tsd-kind-icon">IBuffer<wbr>Error</a>
+						<a href="interfaces/ibuffercache.html" class="tsd-kind-icon">IBuffer<wbr>Cache</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/ibuffererrors.html" class="tsd-kind-icon">IBuffer<wbr>Errors</a>
+						<a href="interfaces/ibufferchange.html" class="tsd-kind-icon">IBuffer<wbr>Change</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ibuffererror.html" class="tsd-kind-icon">IBuffer<wbr>Error</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/ibufferoptions.html" class="tsd-kind-icon">IBuffer<wbr>Options</a>

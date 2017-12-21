@@ -109,8 +109,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="bufferedproxy.html#__changes__" class="tsd-kind-icon">__changes__</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="bufferedproxy.html#__errors__" class="tsd-kind-icon">__errors__</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="bufferedproxy.html#__cache__" class="tsd-kind-icon">__cache__</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="bufferedproxy.html#errorhandler" class="tsd-kind-icon">error<wbr>Handler</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="bufferedproxy.html#executionhandler" class="tsd-kind-icon">execution<wbr>Handler</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="bufferedproxy.html#target" class="tsd-kind-icon">target</a></li>
@@ -119,8 +118,13 @@
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-private"><a href="bufferedproxy.html#cache" class="tsd-kind-icon">cache</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="bufferedproxy.html#changed" class="tsd-kind-icon">changed</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="bufferedproxy.html#changes" class="tsd-kind-icon">changes</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="bufferedproxy.html#errored" class="tsd-kind-icon">errored</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="bufferedproxy.html#errors" class="tsd-kind-icon">errors</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-private"><a href="bufferedproxy.html#invalidresults" class="tsd-kind-icon">invalid<wbr>Results</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-private"><a href="bufferedproxy.html#validresults" class="tsd-kind-icon">valid<wbr>Results</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -130,8 +134,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bufferedproxy.html#get" class="tsd-kind-icon">get</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bufferedproxy.html#reset" class="tsd-kind-icon">reset</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="bufferedproxy.html#set" class="tsd-kind-icon">set</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private"><a href="bufferedproxy.html#seterror" class="tsd-kind-icon">set<wbr>Error</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private"><a href="bufferedproxy.html#setvalue" class="tsd-kind-icon">set<wbr>Value</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="bufferedproxy.html#updatecache" class="tsd-kind-icon">update<wbr>Cache</a></li>
 							</ul>
 						</section>
 					</div>
@@ -149,7 +152,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/buffered-proxy.ts#L35">buffered-proxy.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L36">buffered-proxy.ts:36</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -157,7 +160,7 @@
 									<p>Creates a new instance of <code>BufferedProxy</code>.</p>
 								</div>
 								<pre><code class="lang-ts"><span class="hljs-keyword">const</span> user = { name: <span class="hljs-string">'Lauren'</span> };
-<span class="hljs-keyword">new</span> BufferedProxy(user, \<span class="hljs-comment">/* errorHandler *\/, \/* executionHandler *\/);</span>
+<span class="hljs-keyword">new</span> BufferedProxy(user, bufferOptions);
 </code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -224,22 +227,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="__changes__" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> __changes__</h3>
-					<div class="tsd-signature tsd-kind-icon">__changes__<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;Object.create(null)</span></div>
+					<a name="__cache__" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> __cache__</h3>
+					<div class="tsd-signature tsd-kind-icon">__cache__<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ibuffercache.html" class="tsd-signature-type">IBufferCache</a><span class="tsd-signature-symbol"> =&nbsp;Object.create(null)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/buffered-proxy.ts#L33">buffered-proxy.ts:33</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
-					<a name="__errors__" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> __errors__</h3>
-					<div class="tsd-signature tsd-kind-icon">__errors__<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ibuffererrors.html" class="tsd-signature-type">IBufferErrors</a><span class="tsd-signature-symbol"> =&nbsp;Object.create(null)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/buffered-proxy.ts#L34">buffered-proxy.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L35">buffered-proxy.ts:35</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -249,7 +242,7 @@
 					<div class="tsd-signature tsd-kind-icon">error<wbr>Handler<span class="tsd-signature-symbol">:</span> <a href="../globals.html#buffererrorhandler" class="tsd-signature-type">BufferErrorHandler</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/buffered-proxy.ts#L25">buffered-proxy.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L27">buffered-proxy.ts:27</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -264,7 +257,7 @@
 					<div class="tsd-signature tsd-kind-icon">execution<wbr>Handler<span class="tsd-signature-symbol">:</span> <a href="../globals.html#bufferexecutionhandler" class="tsd-signature-type">BufferExecutionHandler</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/buffered-proxy.ts#L30">buffered-proxy.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L32">buffered-proxy.ts:32</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -279,34 +272,99 @@
 					<div class="tsd-signature tsd-kind-icon">target<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/buffered-proxy.ts#L32">buffered-proxy.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L34">buffered-proxy.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="changes" class="tsd-anchor"></a>
-					<h3>changes</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> changes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-private">
+					<a name="cache" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> cache</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> cache<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/buffered-proxy.ts#L64">buffered-proxy.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L207">buffered-proxy.ts:207</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="changed" class="tsd-anchor"></a>
+					<h3>changed</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> changed<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L65">buffered-proxy.ts:65</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns the cached changes.</p>
+									<p>Returns cached changes as an object.</p>
 								</div>
-								<pre><code class="lang-ts">bufferedProxy.changes; <span class="hljs-comment">// { name: 'Lauren' }</span>
+								<pre><code class="lang-ts">bufferedProxy.changed; <span class="hljs-comment">// { name: 'Lauren' };</span>
 </code></pre>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="changes" class="tsd-anchor"></a>
+					<h3>changes</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> changes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/ibufferchange.html" class="tsd-signature-type">IBufferChange</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L93">buffered-proxy.ts:93</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns cached changes as an array.</p>
+								</div>
+								<pre><code class="lang-ts">bufferedProxy.changes; <span class="hljs-comment">// [{ key: 'name', value: 'Lauren' }]</span>
+</code></pre>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/ibufferchange.html" class="tsd-signature-type">IBufferChange</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="errored" class="tsd-anchor"></a>
+					<h3>errored</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> errored<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L79">buffered-proxy.ts:79</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns cached errors as an object.</p>
+								</div>
+								<pre><code class="lang-ts">bufferedProxy.errored; <span class="hljs-comment">// { name: { value: 'Lauren Elizabeth', message: 'Name is too long' } };</span>
+</code></pre>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -314,23 +372,57 @@
 					<a name="errors" class="tsd-anchor"></a>
 					<h3>errors</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> errors<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> errors<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/ibuffererror.html" class="tsd-signature-type">IBufferError</a><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/buffered-proxy.ts#L75">buffered-proxy.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L106">buffered-proxy.ts:106</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns the cached errors.</p>
+									<p>Returns cached errors as an array.</p>
 								</div>
-								<pre><code class="lang-ts">bufferedProxy.errors; <span class="hljs-comment">// { message: 'must be letters', value: 123 }</span>
+								<pre><code class="lang-ts">bufferedProxy.errors; <span class="hljs-comment">// [{ key: 'name', message: 'must be letters', value: 123 }]</span>
 </code></pre>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/ibuffererror.html" class="tsd-signature-type">IBufferError</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-private">
+					<a name="invalidresults" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> invalid<wbr>Results</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> invalidResults<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="validationresult.html" class="tsd-signature-type">ValidationResult</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L220">buffered-proxy.ts:220</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="validationresult.html" class="tsd-signature-type">ValidationResult</a><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-private">
+					<a name="validresults" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> valid<wbr>Results</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> validResults<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="validationresult.html" class="tsd-signature-type">ValidationResult</a><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L216">buffered-proxy.ts:216</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="validationresult.html" class="tsd-signature-type">ValidationResult</a><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -347,7 +439,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/buffered-proxy.ts#L127">buffered-proxy.ts:127</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L161">buffered-proxy.ts:161</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -361,9 +453,10 @@
 <span class="hljs-keyword">const</span> bufferedProxy = <span class="hljs-keyword">new</span> BufferedProxy(user);
 bufferedProxy.set(
   <span class="hljs-string">'name'</span>,
-  <span class="hljs-keyword">new</span> ValidationResult(<span class="hljs-string">'Lauren Elizabeth'</span>, {
+  <span class="hljs-keyword">new</span> ValidationResult(<span class="hljs-string">'name'</span>, {
     message: <span class="hljs-string">''</span>,
-    validation: <span class="hljs-literal">true</span>
+    validation: <span class="hljs-literal">true</span>,
+    value: <span class="hljs-string">'Lauren Elizabeth'</span>
   })
 );
 bufferedProxy.flush();
@@ -384,13 +477,23 @@ user.name; <span class="hljs-comment">// 'Lauren Elizabeth'</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/buffered-proxy.ts#L133">buffered-proxy.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L177">buffered-proxy.ts:177</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieve value or error from cache by key. Returns property on the buffered
+									proxy as a fallback, followed by the target object.</p>
+								</div>
+								<pre><code class="lang-ts">bufferedProxy.get(<span class="hljs-string">'name'</span>); <span class="hljs-comment">// 'Lauren'</span>
+</code></pre>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>key: <span class="tsd-signature-type">PropertyKey</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -407,7 +510,7 @@ user.name; <span class="hljs-comment">// 'Lauren Elizabeth'</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/buffered-proxy.ts#L161">buffered-proxy.ts:161</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L203">buffered-proxy.ts:203</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -416,9 +519,10 @@ user.name; <span class="hljs-comment">// 'Lauren Elizabeth'</span>
 								</div>
 								<pre><code class="lang-ts">bufferedProxy.set(
   <span class="hljs-string">'name'</span>,
-  <span class="hljs-keyword">new</span> ValidationResult(<span class="hljs-string">'Lauren Elizabeth'</span>, {
+  <span class="hljs-keyword">new</span> ValidationResult(<span class="hljs-string">'name'</span>, {
     message: <span class="hljs-string">''</span>,
-    validation: <span class="hljs-literal">true</span>
+    validation: <span class="hljs-literal">true</span>,
+    value: <span class="hljs-string">'Lauren Elizabeth'</span>
   })
 );
 bufferedProxy.reset();
@@ -433,30 +537,31 @@ bufferedProxy.get(<span class="hljs-string">'name'</span>); <span class="hljs-co
 					<a name="set" class="tsd-anchor"></a>
 					<h3>set</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">set<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyKey</span>, __namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyKey</span>, result<span class="tsd-signature-symbol">: </span><a href="validationresult.html" class="tsd-signature-type">ValidationResult</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="validationresult.html" class="tsd-signature-type">ValidationResult</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/buffered-proxy.ts#L99">buffered-proxy.ts:99</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L133">buffered-proxy.ts:133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Sets a value or error into the respetive cache, after the change has been
+									<p>Sets a value or error into the cache, after the change has been
 									validated. Invokes the <code>errorHandler</code>, if present.</p>
 								</div>
-								<pre><code class="lang-ts"><span class="hljs-keyword">const</span> user = { name: <span class="hljs-string">'Lauren'</span> };
-<span class="hljs-keyword">const</span> bufferedProxy = <span class="hljs-keyword">new</span> BufferedProxy(user);
+								<pre><code class="lang-ts">const user = { name: &#39;Lauren&#39; };
+const bufferedProxy = new BufferedProxy(user);
 bufferedProxy.set(
-  <span class="hljs-string">'name'</span>,
-  <span class="hljs-keyword">new</span> ValidationResult(<span class="hljs-string">'Lauren Elizabeth'</span>, {
-    message: <span class="hljs-string">''</span>,
-    validation: <span class="hljs-literal">true</span>
+  &#39;name&#39;,
+  new ValidationResult(&#39;name&#39;, {
+    message: &#39;&#39;,
+    validation: true,
+    value: &#39;Lauren Elizabeth
   })
 );
-bufferedProxy.get(<span class="hljs-string">'name'</span>); <span class="hljs-comment">// 'Lauren Elizabeth'</span>
+bufferedProxy.get(&#39;name&#39;); // &#39;Lauren Elizabeth&#39;
 </code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -465,88 +570,33 @@ bufferedProxy.get(<span class="hljs-string">'name'</span>); <span class="hljs-co
 									<h5>key: <span class="tsd-signature-type">PropertyKey</span></h5>
 								</li>
 								<li>
-									<h5>__namedParameters: <span class="tsd-signature-type">object</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter">
-											<h5>is<wbr>Valid<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
-										</li>
-										<li class="tsd-parameter">
-											<h5>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-										</li>
-										<li class="tsd-parameter">
-											<h5>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></h5>
-										</li>
-									</ul>
+									<h5>result: <a href="validationresult.html" class="tsd-signature-type">ValidationResult</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="validationresult.html" class="tsd-signature-type">ValidationResult</a></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private">
-					<a name="seterror" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> set<wbr>Error</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Error&lt;T&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyKey</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="updatecache" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> update<wbr>Cache</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Cache<span class="tsd-signature-symbol">(</span>result<span class="tsd-signature-symbol">: </span><a href="validationresult.html" class="tsd-signature-type">ValidationResult</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="validationresult.html" class="tsd-signature-type">ValidationResult</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/buffered-proxy.ts#L171">buffered-proxy.ts:171</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/buffered-proxy.ts#L211">buffered-proxy.ts:211</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T</h4>
-								</li>
-							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>key: <span class="tsd-signature-type">PropertyKey</span></h5>
-								</li>
-								<li>
-									<h5>value: <span class="tsd-signature-type">T</span></h5>
-								</li>
-								<li>
-									<h5>message: <span class="tsd-signature-type">string</span></h5>
+									<h5>result: <a href="validationresult.html" class="tsd-signature-type">ValidationResult</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private">
-					<a name="setvalue" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> set<wbr>Value</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Value&lt;T&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyKey</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/buffered-proxy.ts#L166">buffered-proxy.ts:166</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>key: <span class="tsd-signature-type">PropertyKey</span></h5>
-								</li>
-								<li>
-									<h5>value: <span class="tsd-signature-type">T</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="validationresult.html" class="tsd-signature-type">ValidationResult</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -571,10 +621,7 @@ bufferedProxy.get(<span class="hljs-string">'name'</span>); <span class="hljs-co
 								<a href="bufferedproxy.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="bufferedproxy.html#__changes__" class="tsd-kind-icon">__changes__</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
-								<a href="bufferedproxy.html#__errors__" class="tsd-kind-icon">__errors__</a>
+								<a href="bufferedproxy.html#__cache__" class="tsd-kind-icon">__cache__</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="bufferedproxy.html#errorhandler" class="tsd-kind-icon">error<wbr>Handler</a>
@@ -585,11 +632,26 @@ bufferedProxy.get(<span class="hljs-string">'name'</span>); <span class="hljs-co
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="bufferedproxy.html#target" class="tsd-kind-icon">target</a>
 							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-private">
+								<a href="bufferedproxy.html#cache" class="tsd-kind-icon">cache</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="bufferedproxy.html#changed" class="tsd-kind-icon">changed</a>
+							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="bufferedproxy.html#changes" class="tsd-kind-icon">changes</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="bufferedproxy.html#errored" class="tsd-kind-icon">errored</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="bufferedproxy.html#errors" class="tsd-kind-icon">errors</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-private">
+								<a href="bufferedproxy.html#invalidresults" class="tsd-kind-icon">invalid<wbr>Results</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-private">
+								<a href="bufferedproxy.html#validresults" class="tsd-kind-icon">valid<wbr>Results</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="bufferedproxy.html#flush" class="tsd-kind-icon">flush</a>
@@ -603,11 +665,8 @@ bufferedProxy.get(<span class="hljs-string">'name'</span>); <span class="hljs-co
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="bufferedproxy.html#set" class="tsd-kind-icon">set</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private">
-								<a href="bufferedproxy.html#seterror" class="tsd-kind-icon">set<wbr>Error</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-private">
-								<a href="bufferedproxy.html#setvalue" class="tsd-kind-icon">set<wbr>Value</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="bufferedproxy.html#updatecache" class="tsd-kind-icon">update<wbr>Cache</a>
 							</li>
 						</ul>
 					</li>
@@ -617,10 +676,13 @@ bufferedProxy.get(<span class="hljs-string">'name'</span>); <span class="hljs-co
 						<a href="validationresult.html" class="tsd-kind-icon">Validation<wbr>Result</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/ibuffererror.html" class="tsd-kind-icon">IBuffer<wbr>Error</a>
+						<a href="../interfaces/ibuffercache.html" class="tsd-kind-icon">IBuffer<wbr>Cache</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/ibuffererrors.html" class="tsd-kind-icon">IBuffer<wbr>Errors</a>
+						<a href="../interfaces/ibufferchange.html" class="tsd-kind-icon">IBuffer<wbr>Change</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/ibuffererror.html" class="tsd-kind-icon">IBuffer<wbr>Error</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/ibufferoptions.html" class="tsd-kind-icon">IBuffer<wbr>Options</a>

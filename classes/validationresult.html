@@ -96,7 +96,6 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="validationresult.html#key" class="tsd-kind-icon">key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="validationresult.html#meta" class="tsd-kind-icon">meta</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="validationresult.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -106,6 +105,7 @@
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="validationresult.html#isvalid" class="tsd-kind-icon">is<wbr>Valid</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="validationresult.html#message" class="tsd-kind-icon">message</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="validationresult.html#validation" class="tsd-kind-icon">validation</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="validationresult.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
 						</section>
 					</div>
@@ -117,26 +117,26 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Validation<wbr>Result<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, meta<span class="tsd-signature-symbol">: </span><a href="../interfaces/ivalidationmeta.html" class="tsd-signature-type">IValidationMeta</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="validationresult.html" class="tsd-signature-type">ValidationResult</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Validation<wbr>Result<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyKey</span>, meta<span class="tsd-signature-symbol">: </span><a href="../interfaces/ivalidationmeta.html" class="tsd-signature-type">IValidationMeta</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="validationresult.html" class="tsd-signature-type">ValidationResult</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/validation-result.ts#L28">validation-result.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/validation-result.ts#L18">validation-result.ts:18</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Creates a new instance of <code>ValidationResult</code>.</p>
 								</div>
-								<pre><code class="lang-ts"><span class="hljs-keyword">new</span> ValidationResult(<span class="hljs-number">123</span>, { message: <span class="hljs-string">'must be a string'</span>, validation: <span class="hljs-literal">false</span> });
+								<pre><code class="lang-ts"><span class="hljs-keyword">new</span> ValidationResult(<span class="hljs-string">'name'</span>, { message: <span class="hljs-string">'must be a string'</span>, validation: <span class="hljs-literal">false</span>, value: <span class="hljs-number">123</span> });
 </code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>value: <span class="tsd-signature-type">any</span></h5>
+									<h5>key: <span class="tsd-signature-type">PropertyKey</span></h5>
 								</li>
 								<li>
 									<h5>meta: <a href="../interfaces/ivalidationmeta.html" class="tsd-signature-type">IValidationMeta</a></h5>
@@ -159,7 +159,7 @@
 					<div class="tsd-signature tsd-kind-icon">key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PropertyKey</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/validation-result.ts#L16">validation-result.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/validation-result.ts#L16">validation-result.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -176,27 +176,9 @@
 					<div class="tsd-signature tsd-kind-icon">meta<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ivalidationmeta.html" class="tsd-signature-type">IValidationMeta</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/validation-result.ts#L28">validation-result.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/validation-result.ts#L18">validation-result.ts:18</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="value" class="tsd-anchor"></a>
-					<h3>value</h3>
-					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/validation-result.ts#L26">validation-result.ts:26</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>The value that is being set on the <code>BufferedProxy</code>.</p>
-						</div>
-						<pre><code class="lang-ts">buffer.set(<span class="hljs-string">'name'</span>, <span class="hljs-string">'Lauren'</span>, <span class="hljs-keyword">new</span> ValidatedResult(\<span class="hljs-comment">/* ... *\/));
-validatedResult.value; // 'Lauren'</span>
-</code></pre>
-					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -211,7 +193,7 @@ validatedResult.value; // 'Lauren'</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/validation-result.ts#L85">validation-result.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/validation-result.ts#L86">validation-result.ts:86</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -235,7 +217,7 @@ validatedResult.value; // 'Lauren'</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/validation-result.ts#L74">validation-result.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/validation-result.ts#L75">validation-result.ts:75</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -259,7 +241,7 @@ validatedResult.value; // 'Lauren'</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/validation-result.ts#L63">validation-result.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/validation-result.ts#L64">validation-result.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -283,7 +265,7 @@ validatedResult.value; // 'Lauren'</span>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/dbf2e9c/src/validation-result.ts#L52">validation-result.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/validation-result.ts#L53">validation-result.ts:53</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -294,6 +276,30 @@ validatedResult.value; // 'Lauren'</span>
 </code></pre>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="value" class="tsd-anchor"></a>
+					<h3>value</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> value<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/bb5bbbb/src/validation-result.ts#L42">validation-result.ts:42</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The value being validated.</p>
+								</div>
+								<pre><code class="lang-ts">validatedResult.value; <span class="hljs-comment">// 'Lauren'</span>
+</code></pre>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -326,9 +332,6 @@ validatedResult.value; // 'Lauren'</span>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="validationresult.html#meta" class="tsd-kind-icon">meta</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="validationresult.html#value" class="tsd-kind-icon">value</a>
-							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="validationresult.html#isinvalid" class="tsd-kind-icon">is<wbr>Invalid</a>
 							</li>
@@ -341,15 +344,21 @@ validatedResult.value; // 'Lauren'</span>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="validationresult.html#validation" class="tsd-kind-icon">validation</a>
 							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="validationresult.html#value" class="tsd-kind-icon">value</a>
+							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/ibuffererror.html" class="tsd-kind-icon">IBuffer<wbr>Error</a>
+						<a href="../interfaces/ibuffercache.html" class="tsd-kind-icon">IBuffer<wbr>Cache</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/ibuffererrors.html" class="tsd-kind-icon">IBuffer<wbr>Errors</a>
+						<a href="../interfaces/ibufferchange.html" class="tsd-kind-icon">IBuffer<wbr>Change</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="../interfaces/ibuffererror.html" class="tsd-kind-icon">IBuffer<wbr>Error</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/ibufferoptions.html" class="tsd-kind-icon">IBuffer<wbr>Options</a>
