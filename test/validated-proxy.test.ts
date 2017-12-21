@@ -21,9 +21,9 @@ describe('when setting a value on the proxy', () => {
     });
     proxy.foo = null;
     expect(original.foo).toBe(1);
-    expect(proxy.errors).toEqual({
-      foo: { message: "null is not of type 'string'", value: null }
-    });
+    expect(proxy.errors).toEqual([
+      { key: 'foo', message: "null is not of type 'string'", value: null }
+    ]);
     proxy.flush();
     expect(original.foo).toBe(1);
   });

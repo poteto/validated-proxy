@@ -1,9 +1,11 @@
 import {
   BufferErrorHandler,
   BufferExecutionHandler,
-  IBufferErrors,
+  IBufferCache,
+  IBufferChange,
+  IBufferError,
   IBufferOptions
-} from './interfaces/lib/buffered-proxy';
+} from './interfaces';
 import hasOwnProperty from './lib/has-own-property';
 import ValidationResult from './validation-result';
 
@@ -30,8 +32,7 @@ export default class BufferedProxy {
   public executionHandler: BufferExecutionHandler;
 
   private target: object;
-  private ['__changes__']: object = Object.create(null);
-  private ['__errors__']: IBufferErrors = Object.create(null);
+  private ['__cache__']: IBufferCache = Object.create(null);
   [key: string]: any;
 
   /**
@@ -55,25 +56,60 @@ export default class BufferedProxy {
   }
 
   /**
-   * Returns the cached changes.
+   * Returns cached changes as an object.
    *
    * ```ts
-   * bufferedProxy.changes; // { name: 'Lauren' }
+   * bufferedProxy.changed; // { name: 'Lauren' };
    * ```
    */
-  public get changes() {
-    return this.__changes__;
+  public get changed() {
+    const changed = Object.create(null);
+    for (const key in this.cache) {
+      if (this.cache[key].isValid) {
+        changed[key] = this.cache[key].value;
+      }
+    }
+    return changed;
   }
 
   /**
-   * Returns the cached errors.
+   * Returns cached errors as an object.
    *
    * ```ts
-   * bufferedProxy.errors; // { message: 'must be letters', value: 123 }
+   * bufferedProxy.errored; // { name: { value: 'Lauren', message: 'Name is too long' } };
    * ```
    */
-  public get errors() {
-    return this.__errors__;
+  public get errored() {
+    const errored = Object.create(null);
+    for (const key in this.cache) {
+      if (this.cache[key].isInvalid) {
+        const { value, message } = this.cache[key];
+        errored[key] = { value, message };
+      }
+    }
+    return errored;
+  }
+
+  /**
+   * Returns cached changes as an array.
+   *
+   * ```ts
+   * bufferedProxy.changes; // [{ key: 'name', value: 'Lauren' }]
+   * ```
+   */
+  public get changes(): IBufferChange[] {
+    return this.unwrapValidResults();
+  }
+
+  /**
+   * Returns cached errors as an array.
+   *
+   * ```ts
+   * bufferedProxy.errors; // [{ key: 'name', message: 'must be letters', value: 123 }]
+   * ```
+   */
+  public get errors(): IBufferError[] {
+    return this.unwrapInvalidResults();
   }
 
   /**
@@ -86,6 +122,7 @@ export default class BufferedProxy {
    * bufferedProxy.set(
    *   'name',
    *   new ValidationResult('Lauren Elizabeth', {
+   *     key: 'name',
    *     message: '',
    *     validation: true
    *   })
@@ -96,12 +133,11 @@ export default class BufferedProxy {
    * @param key
    * @param validationResult
    */
-  public set(key: PropertyKey, { value, isValid, message }: ValidationResult) {
-    if (isValid) {
-      return this.setValue(key, value);
+  public set(key: PropertyKey, result: ValidationResult): ValidationResult {
+    if (result.isInvalid) {
+      this.errorHandler(result.message);
     }
-    this.errorHandler(message);
-    return this.setError(key, value, message);
+    return this.updateCache(result);
   }
 
   /**
@@ -125,17 +161,24 @@ export default class BufferedProxy {
    * ```
    */
   public flush(): object {
-    const flushed = this.executionHandler(this.target, this.changes);
+    const flushed = this.executionHandler(this.target, this.changed);
     this.reset();
     return flushed;
   }
 
+  /**
+   * Retrieve value or error from cache by key. Returns property on the buffered
+   * proxy as a fallback, followed by the target object.
+   *
+   * ```ts
+   * bufferedProxy.get('name'); // 'Lauren'
+   * ```
+   *
+   * @param key
+   */
   public get(key: PropertyKey) {
-    if (hasOwnProperty(this.errors, key)) {
-      return this.errors[key];
-    }
-    if (hasOwnProperty(this.changes, key)) {
-      return this.changes[key];
+    if (hasOwnProperty(this.cache, key)) {
+      return this.cache[key].value;
     }
     if (hasOwnProperty(this, key) || this[key]) {
       return this[key];
@@ -149,9 +192,10 @@ export default class BufferedProxy {
    * ```ts
    * bufferedProxy.set(
    *   'name',
-   *   new ValidationResult('Lauren Elizabeth', {
+   *   new ValidationResult('name', {
    *     message: '',
-   *     validation: true
+   *     validation: true,
+   *     value: 'Lauren Elizabeth'
    *   })
    * );
    * bufferedProxy.reset();
@@ -159,17 +203,43 @@ export default class BufferedProxy {
    * ```
    */
   public reset(): void {
-    this.__changes__ = Object.create(null);
-    this.__errors__ = Object.create(null);
+    this.__cache__ = Object.create(null);
   }
 
-  private setValue<T>(key: PropertyKey, value: T): T {
-    this.changes[key] = value;
-    return value;
+  private get cache() {
+    return this.__cache__;
   }
 
-  private setError<T>(key: PropertyKey, value: T, message: string): T {
-    this.errors[key] = { value, message };
-    return value;
+  private updateCache(result: ValidationResult): ValidationResult {
+    this.cache[result.key] = result;
+    return result;
+  }
+
+  private unwrapValidResults(): IBufferChange[] {
+    const changes = [];
+    for (const key in this.cache) {
+      if (this.cache[key].isValid) {
+        changes.push(this.unwrapValidResult(this.cache[key]));
+      }
+    }
+    return changes;
+  }
+
+  private unwrapInvalidResults(): IBufferError[] {
+    const errors = [];
+    for (const key in this.cache) {
+      if (this.cache[key].isInvalid) {
+        errors.push(this.unwrapInvalidResult(this.cache[key]));
+      }
+    }
+    return errors;
+  }
+
+  private unwrapValidResult({ key, value }: ValidationResult) {
+    return { key, value };
+  }
+
+  private unwrapInvalidResult({ key, value, message }: ValidationResult) {
+    return { key, value, message };
   }
 }

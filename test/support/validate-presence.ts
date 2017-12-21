@@ -3,9 +3,10 @@ import ValidationResult from '../../src/validation-result';
 
 const validatePresence = (): IValidatorFunc => {
   return (key, value) =>
-    new ValidationResult(value, {
+    new ValidationResult(key, {
       message: `${key} must be present`,
-      validation: !!value
+      validation: !!value,
+      value
     });
 };
 

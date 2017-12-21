@@ -1,5 +1,5 @@
 import BufferedProxy from './buffered-proxy';
-import { IValidatedProxyOptions } from './interfaces/index';
+import { IValidatedProxyOptions } from './interfaces';
 import validatorLookup from './lib/validator-lookup';
 
 /**
@@ -50,13 +50,13 @@ export default function validatedProxy(
     executionHandler
   });
   return new Proxy(buffer, {
-    get(targetBuffer, property, receiver) {
-      return targetBuffer.get(property);
+    get(targetBuffer, key, receiver) {
+      return targetBuffer.get(key);
     },
-    set(targetBuffer, property, value, receiver) {
-      const validate = validatorLookup(validations, property);
-      const result = validate(property, value, target[property]);
-      targetBuffer.set(property, result);
+    set(targetBuffer, key, value, receiver) {
+      const validate = validatorLookup(validations, key);
+      const result = validate(key, value, target[key]);
+      targetBuffer.set(key, result);
       return true;
     }
   });
