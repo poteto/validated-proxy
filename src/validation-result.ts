@@ -1,4 +1,4 @@
-import { IValidationMeta } from './interfaces';
+import { IBufferChange, IBufferError, IValidationMeta } from './interfaces';
 
 /**
  * Wrapper class for post-validation changes to a `BufferedProxy`. All validator
@@ -84,6 +84,6 @@ export default class ValidationResult {
    * ```
    */
   public get isInvalid(): boolean {
-    return !this.isValid;
+    return this.validation === false;
   }
 }

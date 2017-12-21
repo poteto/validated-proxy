@@ -40,7 +40,7 @@ export default class BufferedProxy {
    *
    * ```ts
    * const user = { name: 'Lauren' };
-   * new BufferedProxy(user, \/* errorHandler *\/, \/* executionHandler *\/);
+   * new BufferedProxy(user, bufferOptions);
    * ```
    *
    * @param target
@@ -62,32 +62,25 @@ export default class BufferedProxy {
    * bufferedProxy.changed; // { name: 'Lauren' };
    * ```
    */
-  public get changed() {
-    const changed = Object.create(null);
-    for (const key in this.cache) {
-      if (this.cache[key].isValid) {
-        changed[key] = this.cache[key].value;
-      }
-    }
-    return changed;
+  public get changed(): object {
+    return this.validResults.reduce((acc, { key, value }) => {
+      acc[key] = value;
+      return acc;
+    }, Object.create(null));
   }
 
   /**
    * Returns cached errors as an object.
    *
    * ```ts
-   * bufferedProxy.errored; // { name: { value: 'Lauren', message: 'Name is too long' } };
+   * bufferedProxy.errored; // { name: { value: 'Lauren Elizabeth', message: 'Name is too long' } };
    * ```
    */
-  public get errored() {
-    const errored = Object.create(null);
-    for (const key in this.cache) {
-      if (this.cache[key].isInvalid) {
-        const { value, message } = this.cache[key];
-        errored[key] = { value, message };
-      }
-    }
-    return errored;
+  public get errored(): object {
+    return this.invalidResults.reduce((acc, { key, message, value }) => {
+      acc[key] = { message, value };
+      return acc;
+    }, Object.create(null));
   }
 
   /**
@@ -98,7 +91,9 @@ export default class BufferedProxy {
    * ```
    */
   public get changes(): IBufferChange[] {
-    return this.unwrapValidResults();
+    return this.validResults.map(({ key, value }) => {
+      return { key, value };
+    });
   }
 
   /**
@@ -109,11 +104,13 @@ export default class BufferedProxy {
    * ```
    */
   public get errors(): IBufferError[] {
-    return this.unwrapInvalidResults();
+    return this.invalidResults.map(({ key, message, value }) => {
+      return { key, message, value };
+    });
   }
 
   /**
-   * Sets a value or error into the respetive cache, after the change has been
+   * Sets a value or error into the cache, after the change has been
    * validated. Invokes the `errorHandler`, if present.
    *
    * ```ts
@@ -121,10 +118,10 @@ export default class BufferedProxy {
    * const bufferedProxy = new BufferedProxy(user);
    * bufferedProxy.set(
    *   'name',
-   *   new ValidationResult('Lauren Elizabeth', {
-   *     key: 'name',
+   *   new ValidationResult('name', {
    *     message: '',
-   *     validation: true
+   *     validation: true,
+   *     value: 'Lauren Elizabeth
    *   })
    * );
    * bufferedProxy.get('name'); // 'Lauren Elizabeth'
@@ -151,9 +148,10 @@ export default class BufferedProxy {
    * const bufferedProxy = new BufferedProxy(user);
    * bufferedProxy.set(
    *   'name',
-   *   new ValidationResult('Lauren Elizabeth', {
+   *   new ValidationResult('name', {
    *     message: '',
-   *     validation: true
+   *     validation: true,
+   *     value: 'Lauren Elizabeth'
    *   })
    * );
    * bufferedProxy.flush();
@@ -180,7 +178,7 @@ export default class BufferedProxy {
     if (hasOwnProperty(this.cache, key)) {
       return this.cache[key].value;
     }
-    if (hasOwnProperty(this, key) || this[key]) {
+    if (this[key]) {
       return this[key];
     }
     return this.target[key];
@@ -215,31 +213,11 @@ export default class BufferedProxy {
     return result;
   }
 
-  private unwrapValidResults(): IBufferChange[] {
-    const changes = [];
-    for (const key in this.cache) {
-      if (this.cache[key].isValid) {
-        changes.push(this.unwrapValidResult(this.cache[key]));
-      }
-    }
-    return changes;
+  private get validResults(): ValidationResult[] {
+    return Object.values(this.cache).filter(r => r.isValid);
   }
 
-  private unwrapInvalidResults(): IBufferError[] {
-    const errors = [];
-    for (const key in this.cache) {
-      if (this.cache[key].isInvalid) {
-        errors.push(this.unwrapInvalidResult(this.cache[key]));
-      }
-    }
-    return errors;
-  }
-
-  private unwrapValidResult({ key, value }: ValidationResult) {
-    return { key, value };
-  }
-
-  private unwrapInvalidResult({ key, value, message }: ValidationResult) {
-    return { key, value, message };
+  private get invalidResults(): ValidationResult[] {
+    return Object.values(this.cache).filter(r => r.isInvalid);
   }
 }
