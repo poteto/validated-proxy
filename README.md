@@ -19,7 +19,7 @@ npm install --save validated-proxy
 Then import it and create a new validated proxy:
 
 ```ts
-import validatedProxy from 'validated-proxy';
+import { validatedProxy } from 'validated-proxy';
 import { validatePresence, validateLength, validateNumber } from '../path/to/validators';
 
 const user = {
@@ -51,8 +51,7 @@ A validator is a higher order function that returns a validation function. The v
 Here's a simple example of creating a validator that validates if a value is of a given `type`:
 
 ```ts
-import { IValidatorFunc } from 'validated-proxy/interfaces';
-import ValidationResult from 'validated-proxy/validation-result';
+import { IValidatorFunc, ValidationResult } from 'validated-proxy';
 
 type Primitive =
   | 'boolean'
@@ -68,9 +67,10 @@ interface IValidatorOptions {
 
 const validateTypeof = ({ type }: IValidatorOptions): IValidatorFunc => {
   return (key, value) =>
-    new ValidationResult(value, {
+    new ValidationResult(key, {
       message: `${value} is not of type '${type}'`,
-      validation: typeof value === type
+      validation: typeof value === type,
+      value
     });
 };
 
