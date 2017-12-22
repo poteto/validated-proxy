@@ -15,6 +15,7 @@
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
     "prepublishOnly": "yarn run build",
+    "postpublish": "yarn run deploy:docs",
     "release": "release-it",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "start": "tsc -w & rollup -c rollup.config.ts -w",
