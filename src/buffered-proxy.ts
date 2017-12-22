@@ -1,7 +1,7 @@
 import hasOwnProperty from './utils/has-own-property';
 import ValidationResult from './validation-result';
 
-export type BufferErrorHandler = (message: string) => void;
+export type BufferErrorHandler = (messages: string[]) => void;
 export type BufferExecutionHandler = (
   target: object,
   changes: object
@@ -10,7 +10,7 @@ export type BufferExecutionHandler = (
 export interface IBufferError {
   key: PropertyKey;
   value: any;
-  message: string;
+  messages: string[];
 }
 
 export interface IBufferChange {
@@ -27,7 +27,18 @@ export interface IBufferCache {
   [key: string]: ValidationResult;
 }
 
+/**
+ * If no execution handler is defined, this is the default.
+ *
+ * @internal
+ */
 const defaultExecutionHandler = Object.assign;
+
+/**
+ * If no error handler is defined, this is the default.
+ *
+ * @internal
+ */
 const defaultErrorHandler = () => {}; // tslint:disable-line no-empty
 
 /**
@@ -91,12 +102,18 @@ export default class BufferedProxy {
    * Returns cached errors as an object.
    *
    * ```ts
-   * bufferedProxy.errored; // { name: { value: 'Lauren Elizabeth', message: 'Name is too long' } };
+   * bufferedProxy.errored;
+   * {
+   *   name: {
+   *     value: 'Lauren Elizabeth',
+   *     messages: ['Name is too long']
+   *   }
+   * };
    * ```
    */
   public get errored(): object {
-    return this.invalidResults.reduce((acc, { key, message, value }) => {
-      acc[key] = { message, value };
+    return this.invalidResults.reduce((acc, { key, messages, value }) => {
+      acc[key] = { messages, value };
       return acc;
     }, Object.create(null));
   }
@@ -118,12 +135,15 @@ export default class BufferedProxy {
    * Returns cached errors as an array.
    *
    * ```ts
-   * bufferedProxy.errors; // [{ key: 'name', message: 'must be letters', value: 123 }]
+   * bufferedProxy.errors;
+   * [
+   *   { key: 'name', messages: ['must be letters'], value: 123 }
+   * ]
    * ```
    */
   public get errors(): IBufferError[] {
-    return this.invalidResults.map(({ key, message, value }) => {
-      return { key, message, value };
+    return this.invalidResults.map(({ key, messages, value }) => {
+      return { key, messages, value };
     });
   }
 
@@ -136,11 +156,12 @@ export default class BufferedProxy {
    * const bufferedProxy = new BufferedProxy(user);
    * bufferedProxy.set(
    *   'name',
-   *   new ValidationResult('name', {
-   *     message: '',
-   *     validation: true,
-   *     value: 'Lauren Elizabeth
-   *   })
+   *   new ValidationResult('name', 'Lauren Elizabeth', [
+   *     {
+   *       message: ['name must be greater than 3 characters'],
+   *       validation: true
+   *     }
+   *   ])
    * );
    * bufferedProxy.get('name'); // 'Lauren Elizabeth'
    * ```
@@ -150,28 +171,20 @@ export default class BufferedProxy {
    */
   public set(key: PropertyKey, result: ValidationResult): ValidationResult {
     if (result.isInvalid) {
-      this.errorHandler(result.message);
+      this.errorHandler(result.messages);
     }
     return this.updateCache(result);
   }
 
   /**
    * Applies all the changes to the target object with the `executionHanlder`,
-   * then resets the cached values and errors to an empty state. The default
-   * `executionHandler` is `Object.assign`, which mutates the target object
-   * directly.
+   * then resets the cache to an empty state. The default `executionHandler`
+   * is `Object.assign`, which mutates the target object directly.
    *
    * ```ts
    * const user = { name: 'Lauren' };
    * const bufferedProxy = new BufferedProxy(user);
-   * bufferedProxy.set(
-   *   'name',
-   *   new ValidationResult('name', {
-   *     message: '',
-   *     validation: true,
-   *     value: 'Lauren Elizabeth'
-   *   })
-   * );
+   * bufferedProxy.set(\/* ... *\/);
    * bufferedProxy.flush();
    * user.name; // 'Lauren Elizabeth'
    * ```
@@ -203,17 +216,10 @@ export default class BufferedProxy {
   }
 
   /**
-   * Resets all cached values and errors.
+   * Resets the cache.
    *
    * ```ts
-   * bufferedProxy.set(
-   *   'name',
-   *   new ValidationResult('name', {
-   *     message: '',
-   *     validation: true,
-   *     value: 'Lauren Elizabeth'
-   *   })
-   * );
+   * bufferedProxy.get('name'); // 'Lauren Elizabeth'
    * bufferedProxy.reset();
    * bufferedProxy.get('name'); // 'Lauren'
    * ```

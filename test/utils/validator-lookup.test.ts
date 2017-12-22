@@ -7,22 +7,38 @@ import ValidationResult from '../../src/validation-result';
 import validatePresence from '../support/validate-presence';
 
 const validationResultGen: Generator<IValidatorFunc> = gen.boolean.then(
-  b => (key, value, _) =>
-    new ValidationResult(key, {
+  b => (key, value, _) => {
+    return {
       message: `value is ${value}`,
-      validation: b,
-      value
-    })
+      validation: b
+    };
+  }
 );
 
 describe('when a validator function is in the validation map', () => {
   it('returns the function', () => {
     const spec = gen.object({ foo: validationResultGen });
     const { result } = check(
-      property(
-        spec,
-        validationMap =>
-          typeof validatorLookup(validationMap, 'foo') === 'function'
+      property(spec, validationMap =>
+        validatorLookup(validationMap, 'foo').every(
+          v => typeof v === 'function'
+        )
+      )
+    );
+    expect(result).toBeTruthy();
+  });
+});
+
+describe('when multiple validator functions', () => {
+  it('returns the functions', () => {
+    const spec = gen.object({
+      foo: gen.array([validationResultGen, validationResultGen])
+    });
+    const { result } = check(
+      property(spec, validationMap =>
+        validatorLookup(validationMap, 'foo').every(
+          v => typeof v === 'function'
+        )
       )
     );
     expect(result).toBeTruthy();
@@ -34,12 +50,15 @@ describe('when a validator function is not in the validation map', () => {
     const key = 'foo';
     const spec = gen.object({ bar: validationResultGen });
     const { result } = check(
-      property(
-        spec,
-        validationMap =>
-          validatorLookup(validationMap, key)(key, 1, null).message ===
-          defaultValidatorMessage
-      )
+      property(spec, validationMap => {
+        const validators = validatorLookup(validationMap, key);
+        const { messages } = new ValidationResult(
+          key,
+          1,
+          validators.map(validate => validate(key, 1, null))
+        );
+        return messages.includes(defaultValidatorMessage);
+      })
     );
     expect(result).toBeTruthy();
   });

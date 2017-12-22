@@ -3,6 +3,7 @@ import BufferedProxy, {
   BufferExecutionHandler
 } from './buffered-proxy';
 import validatorLookup, { IValidationMap } from './utils/validator-lookup';
+import ValidationResult from './validation-result';
 
 export interface IValidatedProxyOptions {
   executionHandler?: BufferExecutionHandler;
@@ -62,8 +63,12 @@ export default function validatedProxy(
       return targetBuffer.get(key);
     },
     set(targetBuffer, key, value, receiver) {
-      const validate = validatorLookup(validations, key);
-      const result = validate(key, value, target[key]);
+      const validators = validatorLookup(validations, key);
+      const result = new ValidationResult(
+        key,
+        value,
+        validators.map(validate => validate(key, value, target[key]))
+      );
       targetBuffer.set(key, result);
       return true;
     }

@@ -1,9 +1,8 @@
 import { IBufferChange, IBufferError } from './buffered-proxy';
 
 export interface IValidationMeta {
-  value: any;
   validation: boolean;
-  message?: string;
+  message: string;
 }
 
 /**
@@ -21,23 +20,6 @@ export default class ValidationResult {
    */
   public key: PropertyKey;
 
-  private meta: IValidationMeta;
-
-  /**
-   * Creates a new instance of `ValidationResult`.
-   *
-   * ```ts
-   * new ValidationResult('name', { message: 'must be a string', validation: false, value: 123 });
-   * ```
-   *
-   * @param value
-   * @param meta
-   */
-  constructor(key: PropertyKey, meta: IValidationMeta) {
-    this.key = key;
-    this.meta = meta;
-  }
-
   /**
    * The value being validated.
    *
@@ -45,19 +27,38 @@ export default class ValidationResult {
    * validatedResult.value; // 'Lauren'
    * ```
    */
-  public get value(): any {
-    return this.meta.value;
-  }
+  public value: any;
 
   /**
-   * Result of the validation.
+   * Result of the validations.
    *
    * ```ts
-   * validationResult.validation; // true
+   * validationResult.validations;
+   * [
+   *   { message: 'must be a string', validation: false },
+   *   { message: 'must be at least 2 characters', validation: true }
+   * ];
    * ```
    */
-  public get validation(): boolean {
-    return this.meta.validation;
+  public validations: IValidationMeta[];
+
+  /**
+   * Creates a new instance of `ValidationResult`.
+   *
+   * ```ts
+   * new ValidationResult('name', 123, [
+   *   { message: 'must be a string', validation: false },
+   *   { message: 'must be at least 2 characters', validation: true }
+   * ]);
+   * ```
+   *
+   * @param value
+   * @param meta
+   */
+  constructor(key: PropertyKey, value: any, validations: IValidationMeta[]) {
+    this.key = key;
+    this.value = value;
+    this.validations = validations;
   }
 
   /**
@@ -67,8 +68,8 @@ export default class ValidationResult {
    * validationResult.message; // 'key cannot be blank'
    * ```
    */
-  public get message(): string {
-    return this.meta.message;
+  public get messages(): string[] {
+    return this.validations.map(v => v.message);
   }
 
   /**
@@ -79,7 +80,7 @@ export default class ValidationResult {
    * ```
    */
   public get isValid(): boolean {
-    return this.validation === true;
+    return this.validations.every(v => v.validation === true);
   }
 
   /**
@@ -90,6 +91,6 @@ export default class ValidationResult {
    * ```
    */
   public get isInvalid(): boolean {
-    return this.validation === false;
+    return !this.isValid;
   }
 }

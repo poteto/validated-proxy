@@ -9,11 +9,12 @@ describe('#set', () => {
       const buffer = new BufferedProxy(original);
       buffer.set(
         'foo',
-        new ValidationResult('foo', {
-          message: '',
-          validation: true,
-          value: 'abc'
-        })
+        new ValidationResult('foo', 'abc', [
+          {
+            message: '',
+            validation: true
+          }
+        ])
       );
       expect(buffer.get('foo')).toBe('abc');
       expect(buffer.changes).toEqual([{ key: 'foo', value: 'abc' }]);
@@ -26,15 +27,24 @@ describe('#set', () => {
       const buffer = new BufferedProxy(original);
       buffer.set(
         'foo',
-        new ValidationResult('foo', {
-          message: 'must be numbers',
-          validation: false,
-          value: 'abc'
-        })
+        new ValidationResult('foo', 'abc', [
+          {
+            message: 'must be numbers',
+            validation: false
+          },
+          {
+            message: 'must be greater than 18',
+            validation: false
+          }
+        ])
       );
       expect(buffer.get('foo')).toEqual('abc');
       expect(buffer.errors).toEqual([
-        { key: 'foo', message: 'must be numbers', value: 'abc' }
+        {
+          key: 'foo',
+          messages: ['must be numbers', 'must be greater than 18'],
+          value: 'abc'
+        }
       ]);
     });
 
@@ -44,15 +54,16 @@ describe('#set', () => {
       const buffer = new BufferedProxy(original, { errorHandler: spy });
       buffer.set(
         'foo',
-        new ValidationResult('foo', {
-          message: 'must be numbers',
-          validation: false,
-          value: 'abc'
-        })
+        new ValidationResult('foo', 'abc', [
+          {
+            message: 'must be numbers',
+            validation: false
+          }
+        ])
       );
       expect(buffer.get('foo')).toEqual('abc');
       expect(buffer.errors).toEqual([
-        { key: 'foo', message: 'must be numbers', value: 'abc' }
+        { key: 'foo', messages: ['must be numbers'], value: 'abc' }
       ]);
       expect(spy.calledOnce).toBeTruthy();
     });
@@ -66,26 +77,28 @@ describe('#get', () => {
     expect(buffer.get('foo')).toBe(1);
     buffer.set(
       'foo',
-      new ValidationResult('foo', {
-        message: '',
-        validation: true,
-        value: 'abc'
-      })
+      new ValidationResult('foo', 'abc', [
+        {
+          message: '',
+          validation: true
+        }
+      ])
     );
     buffer.set(
       'bar',
-      new ValidationResult('bar', {
-        message: 'must be letters',
-        validation: false,
-        value: 123
-      })
+      new ValidationResult('bar', 123, [
+        {
+          message: 'must be letters',
+          validation: false
+        }
+      ])
     );
     expect(buffer.get('bar')).toEqual(123);
     expect(buffer.get('foo')).toBe('abc'); // cached value
     expect(buffer.get('baz')).toEqual([1, 2]); // original value
 
     expect(buffer.errors).toEqual([
-      { key: 'bar', message: 'must be letters', value: 123 }
+      { key: 'bar', messages: ['must be letters'], value: 123 }
     ]);
     expect(buffer.changes).toEqual([{ key: 'foo', value: 'abc' }]);
   });
@@ -97,11 +110,12 @@ describe('#flush', () => {
     const buffer = new BufferedProxy(original);
     buffer.set(
       'foo',
-      new ValidationResult('foo', {
-        message: '',
-        validation: true,
-        value: 'abc'
-      })
+      new ValidationResult('foo', 'abc', [
+        {
+          message: '',
+          validation: true
+        }
+      ])
     );
     buffer.flush();
     expect(original.foo).toBe('abc');
@@ -113,11 +127,12 @@ describe('#flush', () => {
     const buffer = new BufferedProxy(original, { executionHandler: spy });
     buffer.set(
       'foo',
-      new ValidationResult('foo', {
-        message: '',
-        validation: true,
-        value: 'abc'
-      })
+      new ValidationResult('foo', 'abc', [
+        {
+          message: '',
+          validation: true
+        }
+      ])
     );
     buffer.flush();
     expect(spy.calledOnce).toBeTruthy();
@@ -130,19 +145,21 @@ describe('#reset', () => {
     const buffer = new BufferedProxy(original);
     buffer.set(
       'foo',
-      new ValidationResult('foo', {
-        message: '',
-        validation: true,
-        value: 'abc'
-      })
+      new ValidationResult('foo', 'abc', [
+        {
+          message: '',
+          validation: true
+        }
+      ])
     );
     buffer.set(
       'bar',
-      new ValidationResult('bar', {
-        message: 'must be letters',
-        validation: false,
-        value: 123
-      })
+      new ValidationResult('bar', 123, [
+        {
+          message: 'must be letters',
+          validation: false
+        }
+      ])
     );
     expect(buffer.get('foo')).toBe('abc');
     expect(buffer.get('bar')).toEqual(123);
@@ -157,19 +174,21 @@ describe('getters', () => {
     const buffer = new BufferedProxy(original);
     buffer.set(
       'foo',
-      new ValidationResult('foo', {
-        message: '',
-        validation: true,
-        value: 'abc'
-      })
+      new ValidationResult('foo', 'abc', [
+        {
+          message: '',
+          validation: true
+        }
+      ])
     );
     buffer.set(
       'bar',
-      new ValidationResult('bar', {
-        message: 'must be letters',
-        validation: false,
-        value: 123
-      })
+      new ValidationResult('bar', 123, [
+        {
+          message: 'must be letters',
+          validation: false
+        }
+      ])
     );
 
     it('returns changes as an object', () => {
@@ -185,28 +204,30 @@ describe('getters', () => {
     const buffer = new BufferedProxy(original);
     buffer.set(
       'foo',
-      new ValidationResult('foo', {
-        message: '',
-        validation: true,
-        value: 'abc'
-      })
+      new ValidationResult('foo', 'abc', [
+        {
+          message: '',
+          validation: true
+        }
+      ])
     );
     buffer.set(
       'bar',
-      new ValidationResult('bar', {
-        message: 'must be letters',
-        validation: false,
-        value: 123
-      })
+      new ValidationResult('bar', 123, [
+        {
+          message: 'must be letters',
+          validation: false
+        }
+      ])
     );
     it('returns errors as an object', () => {
       expect(buffer.errored).toEqual({
-        bar: { message: 'must be letters', value: 123 }
+        bar: { messages: ['must be letters'], value: 123 }
       });
     });
     it('returns errors as an array', () => {
       expect(buffer.errors).toEqual([
-        { key: 'bar', message: 'must be letters', value: 123 }
+        { key: 'bar', messages: ['must be letters'], value: 123 }
       ]);
     });
   });
