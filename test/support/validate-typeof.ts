@@ -14,12 +14,12 @@ interface IValidatorOptions {
 }
 
 const validateTypeof = ({ type }: IValidatorOptions): IValidatorFunc => {
-  return (key, value) =>
-    new ValidationResult(key, {
-      message: `${value} is not of type '${type}'`,
-      validation: typeof value === type,
-      value
-    });
+  return (key, newValue, oldValue) => {
+    return {
+      message: `${newValue} is not of type '${type}'`,
+      validation: typeof newValue === type
+    };
+  };
 };
 
 export default validateTypeof;

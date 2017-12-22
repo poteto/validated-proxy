@@ -2,12 +2,12 @@ import { IValidatorFunc } from '../../src/utils/validator-lookup';
 import ValidationResult from '../../src/validation-result';
 
 const validatePresence = (): IValidatorFunc => {
-  return (key, value) =>
-    new ValidationResult(key, {
+  return (key, newValue, oldValue) => {
+    return {
       message: `${key} must be present`,
-      validation: !!value,
-      value
-    });
+      validation: !!newValue
+    };
+  };
 };
 
 export default validatePresence;
