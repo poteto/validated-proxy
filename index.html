@@ -112,12 +112,12 @@ user.name; <span class="hljs-comment">// 'Michael Bolton'</span>
 }
 
 <span class="hljs-keyword">const</span> validateTypeof = ({ <span class="hljs-keyword">type</span> }: IValidatorOptions): <span class="hljs-function"><span class="hljs-params">IValidatorFunc</span> =&gt;</span> {
-  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">key, value</span>) =&gt;</span>
-    <span class="hljs-keyword">new</span> ValidationResult(key, {
-      message: <span class="hljs-string">`<span class="hljs-subst">${value}</span> is not of type '<span class="hljs-subst">${type}</span>'`</span>,
-      validation: <span class="hljs-keyword">typeof</span> value === <span class="hljs-keyword">type</span>,
-      value
-    });
+  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">key, newValue, oldValue</span>) =&gt;</span> {
+    <span class="hljs-keyword">return</span> {
+      message: <span class="hljs-string">`<span class="hljs-subst">${newValue}</span> is not of type '<span class="hljs-subst">${type}</span>'`</span>,
+      validation: <span class="hljs-keyword">typeof</span> newValue === <span class="hljs-keyword">type</span>
+    };
+  };
 };
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> validateTypeof;
@@ -160,9 +160,6 @@ user.name; <span class="hljs-comment">// 'Michael Bolton'</span>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/ivalidationmeta.html" class="tsd-kind-icon">IValidation<wbr>Meta</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/ivalidatorfactoryoptions.html" class="tsd-kind-icon">IValidator<wbr>Factory<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#buffererrorhandler" class="tsd-kind-icon">Buffer<wbr>Error<wbr>Handler</a>

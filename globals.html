@@ -82,7 +82,6 @@
 								<li class="tsd-kind-interface"><a href="interfaces/ivalidatedproxyoptions.html" class="tsd-kind-icon">IValidated<wbr>Proxy<wbr>Options</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/ivalidationmap.html" class="tsd-kind-icon">IValidation<wbr>Map</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/ivalidationmeta.html" class="tsd-kind-icon">IValidation<wbr>Meta</a></li>
-								<li class="tsd-kind-interface"><a href="interfaces/ivalidatorfactoryoptions.html" class="tsd-kind-icon">IValidator<wbr>Factory<wbr>Options</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -122,7 +121,7 @@
 					<div class="tsd-signature tsd-kind-icon">Buffer<wbr>Error<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/614871c/src/buffered-proxy.ts#L4">buffered-proxy.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/054093a/src/buffered-proxy.ts#L4">buffered-proxy.ts:4</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -130,14 +129,14 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>messages<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
-												<h5>message: <span class="tsd-signature-type">string</span></h5>
+												<h5>messages: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
 											</li>
 										</ul>
 										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -153,7 +152,7 @@
 					<div class="tsd-signature tsd-kind-icon">Buffer<wbr>Execution<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/614871c/src/buffered-proxy.ts#L5">buffered-proxy.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/054093a/src/buffered-proxy.ts#L5">buffered-proxy.ts:5</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -187,15 +186,20 @@
 					<div class="tsd-signature tsd-kind-icon">IValidator<wbr>Func<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/614871c/src/utils/validator-lookup.ts#L3">utils/validator-lookup.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/054093a/src/utils/validator-lookup.ts#L6">utils/validator-lookup.ts:6</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Function signature for validator functions.</p>
+						</div>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyKey</span>, newValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, oldValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes/validationresult.html" class="tsd-signature-type">ValidationResult</a></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyKey</span>, newValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, oldValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/ivalidationmeta.html" class="tsd-signature-type">IValidationMeta</a></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
@@ -211,7 +215,7 @@
 												<h5>oldValue: <span class="tsd-signature-type">any</span></h5>
 											</li>
 										</ul>
-										<h4 class="tsd-returns-title">Returns <a href="classes/validationresult.html" class="tsd-signature-type">ValidationResult</a></h4>
+										<h4 class="tsd-returns-title">Returns <a href="interfaces/ivalidationmeta.html" class="tsd-signature-type">IValidationMeta</a></h4>
 									</li>
 								</ul>
 							</li>
@@ -227,9 +231,18 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Execution<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">assign</span><span class="tsd-signature-symbol"> =&nbsp;Object.assign</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/614871c/src/buffered-proxy.ts#L30">buffered-proxy.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/054093a/src/buffered-proxy.ts#L35">buffered-proxy.ts:35</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>If no execution handler is defined, this is the default.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>internal</dt>
+							<dd></dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="defaultvalidatormessage" class="tsd-anchor"></a>
@@ -237,9 +250,19 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Validator<wbr>Message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"No validator found"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;No validator found&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/614871c/src/utils/validator-lookup.ts#L17">utils/validator-lookup.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/054093a/src/utils/validator-lookup.ts#L26">utils/validator-lookup.ts:26</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>If no validator is found, this is the default message returned by the
+							validator function.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>internal</dt>
+							<dd></dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="defaultvalidatorvalidation" class="tsd-anchor"></a>
@@ -247,9 +270,19 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Validator<wbr>Validation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">true</span><span class="tsd-signature-symbol"> =&nbsp;true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/614871c/src/utils/validator-lookup.ts#L18">utils/validator-lookup.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/054093a/src/utils/validator-lookup.ts#L34">utils/validator-lookup.ts:34</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>If no validator is found, this is the default validation returned by the
+							validator function.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>internal</dt>
+							<dd></dd>
+						</dl>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -264,9 +297,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/614871c/src/buffered-proxy.ts#L31">buffered-proxy.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/054093a/src/buffered-proxy.ts#L42">buffered-proxy.ts:42</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>If no error handler is defined, this is the default.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -275,15 +313,20 @@
 					<a name="defaultvalidator" class="tsd-anchor"></a>
 					<h3>default<wbr>Validator</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">default<wbr>Validator<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, _<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes/validationresult.html" class="tsd-signature-type">ValidationResult</a></li>
+						<li class="tsd-signature tsd-kind-icon">default<wbr>Validator<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, oldValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/614871c/src/utils/validator-lookup.ts#L19">utils/validator-lookup.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/054093a/src/utils/validator-lookup.ts#L41">utils/validator-lookup.ts:41</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>If no validator is found, this is the default validator function.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -293,10 +336,18 @@
 									<h5>value: <span class="tsd-signature-type">any</span></h5>
 								</li>
 								<li>
-									<h5>_: <span class="tsd-signature-type">any</span></h5>
+									<h5>oldValue: <span class="tsd-signature-type">any</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="classes/validationresult.html" class="tsd-signature-type">ValidationResult</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span></h4>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter">
+									<h5>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li class="tsd-parameter">
+									<h5>validation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></h5>
+								</li>
+							</ul>
 						</li>
 					</ul>
 				</section>
@@ -310,7 +361,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/614871c/src/utils/has-own-property.ts#L13">utils/has-own-property.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/054093a/src/utils/has-own-property.ts#L13">utils/has-own-property.ts:13</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -347,7 +398,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/614871c/src/validated-proxy.ts#L52">validated-proxy.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/054093a/src/validated-proxy.ts#L53">validated-proxy.ts:53</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -397,14 +448,14 @@ user.name; <span class="hljs-comment">// 'Michael Bolton'</span>
 											<ul class="tsd-parameters">
 												<li class="tsd-parameter-siganture">
 													<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-is-not-exported">
-														<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+														<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>messages<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 													</ul>
 													<ul class="tsd-descriptions">
 														<li class="tsd-description">
 															<h4 class="tsd-parameters-title">Parameters</h4>
 															<ul class="tsd-parameters">
 																<li>
-																	<h5>message: <span class="tsd-signature-type">string</span></h5>
+																	<h5>messages: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
 																</li>
 															</ul>
 															<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -451,23 +502,29 @@ user.name; <span class="hljs-comment">// 'Michael Bolton'</span>
 					<a name="validatorlookup" class="tsd-anchor"></a>
 					<h3>validator<wbr>Lookup</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">validator<wbr>Lookup<span class="tsd-signature-symbol">(</span>validations<span class="tsd-signature-symbol">: </span><a href="interfaces/ivalidationmap.html" class="tsd-signature-type">IValidationMap</a>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyKey</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#ivalidatorfunc" class="tsd-signature-type">IValidatorFunc</a></li>
+						<li class="tsd-signature tsd-kind-icon">validator<wbr>Lookup<span class="tsd-signature-symbol">(</span>validations<span class="tsd-signature-symbol">: </span><a href="interfaces/ivalidationmap.html" class="tsd-signature-type">IValidationMap</a>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">PropertyKey</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#ivalidatorfunc" class="tsd-signature-type">IValidatorFunc</a><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/614871c/src/utils/validator-lookup.ts#L40">utils/validator-lookup.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/054093a/src/utils/validator-lookup.ts#L67">utils/validator-lookup.ts:67</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Looks up a validator function from a validator map. If none are found, fall
+									<p>Looks up validator function(s) from a validator map. If none are found, fall
 									back to the <code>defaultValidator</code>.</p>
 								</div>
 								<pre><code class="lang-ts"><span class="hljs-keyword">const</span> original = { foo: <span class="hljs-literal">null</span> };
-<span class="hljs-keyword">const</span> validationMap = { foo: validatePresence() };
-validatorLookup(validationMap, <span class="hljs-string">'foo'</span>); <span class="hljs-comment">// IValidatorFunc</span>
+<span class="hljs-keyword">const</span> validationMap = {
+  foo: validatePresence(),
+  bar: [
+    validatePresence(),
+    validateLength({ gt: <span class="hljs-number">2</span> })
+  ]
+};
+validatorLookup(validationMap, <span class="hljs-string">'foo'</span>); <span class="hljs-comment">// IValidatorFunc[]</span>
 </code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -481,7 +538,7 @@ validatorLookup(validationMap, <span class="hljs-string">'foo'</span>); <span cl
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="globals.html#ivalidatorfunc" class="tsd-signature-type">IValidatorFunc</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="globals.html#ivalidatorfunc" class="tsd-signature-type">IValidatorFunc</a><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -523,9 +580,6 @@ validatorLookup(validationMap, <span class="hljs-string">'foo'</span>); <span cl
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/ivalidationmeta.html" class="tsd-kind-icon">IValidation<wbr>Meta</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/ivalidatorfactoryoptions.html" class="tsd-kind-icon">IValidator<wbr>Factory<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#buffererrorhandler" class="tsd-kind-icon">Buffer<wbr>Error<wbr>Handler</a>
