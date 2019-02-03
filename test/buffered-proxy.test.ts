@@ -1,4 +1,4 @@
-import sinon from 'sinon';
+import { spy } from 'sinon';
 import BufferedProxy from '../src/buffered-proxy';
 import ValidationResult from '../src/validation-result';
 
@@ -49,9 +49,9 @@ describe('#set', () => {
     });
 
     it('invokes errorHandler if present', () => {
-      const spy = sinon.spy();
+      const spyFunc = spy();
       const original = { foo: 1 };
-      const buffer = new BufferedProxy(original, { errorHandler: spy });
+      const buffer = new BufferedProxy(original, { errorHandler: spyFunc });
       buffer.set(
         'foo',
         new ValidationResult('foo', 'abc', [
@@ -65,7 +65,7 @@ describe('#set', () => {
       expect(buffer.errors).toEqual([
         { key: 'foo', messages: ['must be numbers'], value: 'abc' }
       ]);
-      expect(spy.calledOnce).toBeTruthy();
+      expect(spyFunc.calledOnce).toBeTruthy();
     });
   });
 });
@@ -122,9 +122,9 @@ describe('#flush', () => {
   });
 
   it('sets value with optional execution handler', () => {
-    const spy = sinon.spy();
+    const spyFunc = spy();
     const original = { foo: 1 };
-    const buffer = new BufferedProxy(original, { executionHandler: spy });
+    const buffer = new BufferedProxy(original, { executionHandler: spyFunc });
     buffer.set(
       'foo',
       new ValidationResult('foo', 'abc', [
@@ -135,7 +135,7 @@ describe('#flush', () => {
       ])
     );
     buffer.flush();
-    expect(spy.calledOnce).toBeTruthy();
+    expect(spyFunc.calledOnce).toBeTruthy();
   });
 });
 

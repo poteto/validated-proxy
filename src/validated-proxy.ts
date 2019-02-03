@@ -60,16 +60,19 @@ export default function validatedProxy(
   });
   return new Proxy(buffer, {
     get(targetBuffer, key, receiver) {
-      return targetBuffer.get(key);
+      return targetBuffer.get(key.toString());
     },
     set(targetBuffer, key, value, receiver) {
-      const validators = validatorLookup(validations, key);
+      const stringifiedKey = key.toString();
+      const validators = validatorLookup(validations, stringifiedKey);
       const result = new ValidationResult(
-        key,
+        stringifiedKey,
         value,
-        validators.map(validate => validate(key, value, target[key]))
+        validators.map(validate =>
+          validate(stringifiedKey, value, target[stringifiedKey])
+        )
       );
-      targetBuffer.set(key, result);
+      targetBuffer.set(stringifiedKey, result);
       return true;
     }
   });

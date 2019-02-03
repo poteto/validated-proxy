@@ -6,15 +6,16 @@ export type BufferExecutionHandler = (
   target: object,
   changes: object
 ) => object;
+export type ValidKey = string | number;
 
 export interface IBufferError {
-  key: PropertyKey;
+  key: ValidKey;
   value: any;
   messages: string[];
 }
 
 export interface IBufferChange {
-  key: PropertyKey;
+  key: ValidKey;
   value: any;
 }
 
@@ -169,7 +170,7 @@ export default class BufferedProxy {
    * @param key
    * @param validationResult
    */
-  public set(key: PropertyKey, result: ValidationResult): ValidationResult {
+  public set(key: ValidKey, result: ValidationResult): ValidationResult {
     if (result.isInvalid) {
       this.errorHandler(result.messages);
     }
@@ -205,7 +206,7 @@ export default class BufferedProxy {
    *
    * @param key
    */
-  public get(key: PropertyKey) {
+  public get(key: ValidKey) {
     if (hasOwnProperty(this.cache, key)) {
       return this.cache[key].value;
     }
