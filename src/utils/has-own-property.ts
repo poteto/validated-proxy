@@ -12,7 +12,7 @@
  */
 export default function hasOwnProperty<T>(
   obj: T,
-  ...args: Array<unknown>
+  ...args: [string | number | symbol]
 ): boolean {
   return Object.prototype.hasOwnProperty.apply(obj, args);
 }

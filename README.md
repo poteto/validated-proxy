@@ -67,7 +67,7 @@ A validator is a higher order function that returns a validation function. The v
 Here's an example of creating a validator that validates if a value is of a given `type`:
 
 ```ts
-import { ValidatorFunction, ValidationResult } from 'validated-proxy';
+import { ValidatorFunction } from 'validated-proxy';
 
 type Primitive =
   | 'boolean'
@@ -136,7 +136,7 @@ More examples can be seen [here](/test/support).
 
 ## Custom error handlers
 
-The error handler is a function that is called when an invalid value is set. This is in addition to the error that is already stored in the cache. By default, the error handler is a `no-op` (does nothing). You can specify a custom error handler; for example, you could log error messages, send them to a server, etc:
+The error handler is a function that is called when an invalid value is set. This is in addition to the error that is already stored in the cache. By default, the error handler is a `no-op` (does nothing). You can specify a custom error handler; for example, you could throw an error, log error messages, send them to a server, etc:
 
 ```ts
 const proxy = validatedProxy(original, {

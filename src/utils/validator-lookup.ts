@@ -1,4 +1,5 @@
 import { ValidKey } from '../buffered-proxy';
+import { UnknownObject } from '../validated-proxy';
 import { ValidationMeta } from '../validation-result';
 
 /**
@@ -69,10 +70,11 @@ export const defaultValidator: ValidatorFunction<unknown> = () => {
  * @param validations
  * @param key
  */
-export default function validatorLookup<T, K extends keyof T>(
-  validations: ValidationMap<T>,
-  key: ValidKey
-): Array<ValidatorFunction<T[K]>> {
+export default function validatorLookup<
+  V extends UnknownObject,
+  T extends ValidationMap<V>,
+  K extends keyof T
+>(validations: T, key: ValidKey): Array<ValidatorFunction<T[K]>> {
   const validator = validations[key] || defaultValidator;
   return Array.isArray(validator) ? validator : [validator];
 }

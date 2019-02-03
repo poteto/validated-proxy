@@ -3,16 +3,18 @@ import validatorLookup, {
   defaultValidatorMessage,
   ValidatorFunction
 } from '../../src/utils/validator-lookup';
-import ValidationResult from '../../src/validation-result';
+import ValidationResult, { ValidationMeta } from '../../src/validation-result';
 
 const validationResultGen: Generator<
   ValidatorFunction<unknown>
-> = gen.boolean.then(b => (key, value, _) => {
-  return {
-    message: `value is ${value}`,
-    validation: b
-  };
-});
+> = gen.boolean.then(
+  b => (key: string, value: unknown, _: unknown): ValidationMeta => {
+    return {
+      message: `value is ${value}`,
+      validation: b
+    };
+  }
+);
 
 describe('when a validator function is in the validation map', () => {
   it('returns the function', () => {
