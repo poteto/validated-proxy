@@ -51,7 +51,7 @@ user.name; // 'Michael Bolton'
 updatedUser.name = 'a';
 user.name; // 'Billy Bob'
 updatedUser.errors; // [
-//   { key: 'foo',
+//   { key: 'name',
 //     messages: ['name must be more than 4 characters'],
 //     value: 'a'
 //   }
