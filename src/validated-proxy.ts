@@ -10,6 +10,9 @@ export interface ValidatedProxyOptions<T> {
   errorHandler?: BufferErrorHandler;
   validations: ValidationMap<T>;
 }
+export interface UnknownObject {
+  [key: string]: unknown;
+}
 
 /**
  * Wraps a target object with a `BufferedProxy`. Setters will first invoke a
@@ -50,7 +53,7 @@ export interface ValidatedProxyOptions<T> {
  * @param target
  * @param validatedProxyOptions
  */
-export default function validatedProxy<T>(
+export default function validatedProxy<T extends UnknownObject>(
   target: T,
   { errorHandler, executionHandler, validations }: ValidatedProxyOptions<T>
 ) {

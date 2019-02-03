@@ -123,7 +123,7 @@ describe('#flush', () => {
 
   it('sets value with optional execution handler', () => {
     const spyFunc = spy();
-    const original = { foo: 1 };
+    const original = { foo: 'a' };
     const buffer = new BufferedProxy(original, { executionHandler: spyFunc });
     buffer.set(
       'foo',
@@ -141,7 +141,10 @@ describe('#flush', () => {
 
 describe('#reset', () => {
   it('resets all cached values', () => {
-    const original = { foo: 'a', bar: undefined };
+    const original: { bar?: number; foo?: string } = {
+      bar: undefined,
+      foo: 'a'
+    };
     const buffer = new BufferedProxy(original);
     buffer.set(
       'foo',
@@ -170,7 +173,10 @@ describe('#reset', () => {
 
 describe('getters', () => {
   describe('#changes/#changed', () => {
-    const original = { foo: 'a', bar: undefined };
+    const original: { bar?: number; foo?: string } = {
+      bar: undefined,
+      foo: 'a'
+    };
     const buffer = new BufferedProxy(original);
     buffer.set(
       'foo',
@@ -200,7 +206,10 @@ describe('getters', () => {
   });
 
   describe('#errors/#errored', () => {
-    const original = { foo: 'a', bar: undefined };
+    const original: { bar?: number; foo?: string } = {
+      bar: undefined,
+      foo: 'a'
+    };
     const buffer = new BufferedProxy(original);
     buffer.set(
       'foo',
