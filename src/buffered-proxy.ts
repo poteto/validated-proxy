@@ -234,7 +234,6 @@ export default class BufferedProxy<T, K extends keyof T> {
    * ```
    */
   public flush() {
-    console.log(this.target, this.changed); // tslint:disable-line
     this.executionHandler(this.target, this.changed);
     this.reset();
   }
