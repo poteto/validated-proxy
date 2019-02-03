@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IBufferOptions | validated-proxy</title>
+	<title>BufferChange | validated-proxy</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,21 +54,29 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="ibufferoptions.html">IBufferOptions</a>
+					<a href="bufferchange.html">BufferChange</a>
 				</li>
 			</ul>
-			<h1>Interface IBufferOptions</h1>
+			<h1>Interface BufferChange&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>T</h4>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IBufferOptions</span>
+						<span class="target">BufferChange</span>
 					</li>
 				</ul>
 			</section>
@@ -79,8 +87,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ibufferoptions.html#errorhandler" class="tsd-kind-icon">error<wbr>Handler</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ibufferoptions.html#executionhandler" class="tsd-kind-icon">execution<wbr>Handler</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="bufferchange.html#key" class="tsd-kind-icon">key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="bufferchange.html#value" class="tsd-kind-icon">value</a></li>
 							</ul>
 						</section>
 					</div>
@@ -89,22 +97,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="errorhandler" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> error<wbr>Handler</h3>
-					<div class="tsd-signature tsd-kind-icon">error<wbr>Handler<span class="tsd-signature-symbol">:</span> <a href="../globals.html#buffererrorhandler" class="tsd-signature-type">BufferErrorHandler</a></div>
+					<a name="key" class="tsd-anchor"></a>
+					<h3>key</h3>
+					<div class="tsd-signature tsd-kind-icon">key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ValidKey</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/054093a/src/buffered-proxy.ts#L22">buffered-proxy.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/01e373f/src/buffered-proxy.ts#L49">buffered-proxy.ts:49</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="executionhandler" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> execution<wbr>Handler</h3>
-					<div class="tsd-signature tsd-kind-icon">execution<wbr>Handler<span class="tsd-signature-symbol">:</span> <a href="../globals.html#bufferexecutionhandler" class="tsd-signature-type">BufferExecutionHandler</a></div>
+					<a name="value" class="tsd-anchor"></a>
+					<h3>value</h3>
+					<div class="tsd-signature tsd-kind-icon">value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/054093a/src/buffered-proxy.ts#L23">buffered-proxy.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/poteto/validated-proxy/blob/01e373f/src/buffered-proxy.ts#L50">buffered-proxy.ts:50</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -120,76 +128,58 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="../classes/bufferedproxy.html" class="tsd-kind-icon">Buffered<wbr>Proxy</a>
 					</li>
-					<li class=" tsd-kind-class">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="../classes/validationresult.html" class="tsd-kind-icon">Validation<wbr>Result</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="ibuffercache.html" class="tsd-kind-icon">IBuffer<wbr>Cache</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="ibufferchange.html" class="tsd-kind-icon">IBuffer<wbr>Change</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="ibuffererror.html" class="tsd-kind-icon">IBuffer<wbr>Error</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="ibufferoptions.html" class="tsd-kind-icon">IBuffer<wbr>Options</a>
+					<li class="current tsd-kind-interface tsd-has-type-parameter">
+						<a href="bufferchange.html" class="tsd-kind-icon">Buffer<wbr>Change</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ibufferoptions.html#errorhandler" class="tsd-kind-icon">error<wbr>Handler</a>
+								<a href="bufferchange.html#key" class="tsd-kind-icon">key</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ibufferoptions.html#executionhandler" class="tsd-kind-icon">execution<wbr>Handler</a>
+								<a href="bufferchange.html#value" class="tsd-kind-icon">value</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface">
-						<a href="ivalidatedproxyoptions.html" class="tsd-kind-icon">IValidated<wbr>Proxy<wbr>Options</a>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="buffererror.html" class="tsd-kind-icon">Buffer<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="bufferoptions.html" class="tsd-kind-icon">Buffer<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="validatedproxyoptions.html" class="tsd-kind-icon">Validated<wbr>Proxy<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="ivalidationmap.html" class="tsd-kind-icon">IValidation<wbr>Map</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="ivalidationmeta.html" class="tsd-kind-icon">IValidation<wbr>Meta</a>
+						<a href="validationmeta.html" class="tsd-kind-icon">Validation<wbr>Meta</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="../globals.html#buffererrorhandler" class="tsd-kind-icon">Buffer<wbr>Error<wbr>Handler</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="../globals.html#bufferexecutionhandler" class="tsd-kind-icon">Buffer<wbr>Execution<wbr>Handler</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="../globals.html#ivalidatorfunc" class="tsd-kind-icon">IValidator<wbr>Func</a>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#validationmap" class="tsd-kind-icon">Validation<wbr>Map</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="../globals.html#defaultexecutionhandler" class="tsd-kind-icon">default<wbr>Execution<wbr>Handler</a>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="../globals.html#validatorfunction" class="tsd-kind-icon">Validator<wbr>Function</a>
 					</li>
-					<li class=" tsd-kind-variable">
-						<a href="../globals.html#defaultvalidatormessage" class="tsd-kind-icon">default<wbr>Validator<wbr>Message</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="../globals.html#defaultvalidatorvalidation" class="tsd-kind-icon">default<wbr>Validator<wbr>Validation</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="../globals.html#defaulterrorhandler" class="tsd-kind-icon">default<wbr>Error<wbr>Handler</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../globals.html#defaultvalidator" class="tsd-kind-icon">default<wbr>Validator</a>
-					</li>
-					<li class=" tsd-kind-function">
+					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="../globals.html#hasownproperty" class="tsd-kind-icon">has<wbr>Own<wbr>Property</a>
 					</li>
-					<li class=" tsd-kind-function">
+					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="../globals.html#validatedproxy" class="tsd-kind-icon">validated<wbr>Proxy</a>
 					</li>
-					<li class=" tsd-kind-function">
+					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="../globals.html#validatorlookup" class="tsd-kind-icon">validator<wbr>Lookup</a>
 					</li>
 				</ul>

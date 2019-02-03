@@ -62,42 +62,53 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="validated-proxy-npm-version-https-badge-fury-io-js-validated-proxy-svg-https-badge-fury-io-js-validated-proxy-build-status-https-travis-ci-org-poteto-validated-proxy-svg-branch-master-https-travis-ci-org-poteto-validated-proxy-coverage-status-https-coveralls-io-repos-github-poteto-validated-proxy-badge-svg-branch-master-https-coveralls-io-github-poteto-validated-proxy-branch-master-">validated-proxy <a href="https://badge.fury.io/js/validated-proxy"><img src="https://badge.fury.io/js/validated-proxy.svg" alt="npm version"></a> <a href="https://travis-ci.org/poteto/validated-proxy"><img src="https://travis-ci.org/poteto/validated-proxy.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/github/poteto/validated-proxy?branch=master"><img src="https://coveralls.io/repos/github/poteto/validated-proxy/badge.svg?branch=master" alt="Coverage Status"></a></h1>
-				<p>The idea behind a validated proxy is simple: it represents a set of valid changes to be applied onto any object. Each change is tested against an optional validation, and if valid, the change is stored and applied when executed.</p>
+				<h1 id="validated-proxy-npm-version-build-status-coverage-status">validated-proxy <a href="https://badge.fury.io/js/validated-proxy"><img src="https://badge.fury.io/js/validated-proxy.svg" alt="npm version"></a> <a href="https://travis-ci.org/poteto/validated-proxy"><img src="https://travis-ci.org/poteto/validated-proxy.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/github/poteto/validated-proxy?branch=master"><img src="https://coveralls.io/repos/github/poteto/validated-proxy/badge.svg?branch=master" alt="Coverage Status"></a></h1>
+				<p>A validated proxy represents a set of valid changes to be applied later onto any object. Each change is tested against an optional validation, and if valid, the change is stored and applied when executed.</p>
+				<h2 id="documentation">Documentation</h2>
+				<p>Latest documentation is available <a href="https://poteto.github.io/validated-proxy/">here</a>.</p>
 				<h2 id="getting-started">Getting started</h2>
 				<p>Install using <code>yarn</code>:</p>
-				<pre><code>yarn <span class="hljs-keyword">add</span><span class="bash"> validated-proxy</span>
-</code></pre><p>Or using <code>npm</code>:</p>
-				<pre><code>npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save validated-proxy</span>
-</code></pre><p>Then import it and create a new validated proxy:</p>
-				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> { validatedProxy } <span class="hljs-keyword">from</span> <span class="hljs-string">'validated-proxy'</span>;
-<span class="hljs-keyword">import</span> { validatePresence, validateLength, validateNumber } <span class="hljs-keyword">from</span> <span class="hljs-string">'../path/to/validators'</span>;
+				<pre><code>yarn <span class="hljs-keyword">add</span><span class="bash"> validated-proxy</span></code></pre><p>Or using <code>npm</code>:</p>
+				<pre><code>npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save validated-proxy</span></code></pre><p>Then import it and create a new validated proxy:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { validatedProxy } <span class="hljs-keyword">from</span> <span class="hljs-string">'validated-proxy'</span>;
+<span class="hljs-keyword">import</span> {
+  validatePresence,
+  validateLength,
+  validateNumber
+} <span class="hljs-keyword">from</span> <span class="hljs-string">'../path/to/validators'</span>;
 
 <span class="hljs-keyword">const</span> user = {
   name: <span class="hljs-string">'Billy Bob'</span>,
   age: <span class="hljs-number">25</span>
 };
-<span class="hljs-keyword">const</span> bufferedProxy = validatedProxy(user, {
+<span class="hljs-keyword">const</span> updatedUser = validatedProxy(user, {
   validations: {
-    name: [
-      validatePresence(<span class="hljs-literal">true</span>),
-      validateLength({ min: <span class="hljs-number">4</span> })
-    ],
-    age: [
-      validatePresence(<span class="hljs-literal">true</span>),
-      validateNumber({ gte: <span class="hljs-number">18</span> })
-    ]
+    name: [validatePresence(<span class="hljs-literal">true</span>), validateLength({ min: <span class="hljs-number">4</span> })],
+    age: [validatePresence(<span class="hljs-literal">true</span>), validateNumber({ gte: <span class="hljs-number">18</span> })]
   }
 });
-bufferedProxy.name = <span class="hljs-string">'Michael Bolton'</span>;
+
+<span class="hljs-comment">// valid changes</span>
+updatedUser.name = <span class="hljs-string">'Michael Bolton'</span>;
 user.name; <span class="hljs-comment">// 'Billy Bob'</span>
-bufferedProxy.flush();
+updatedUser.flush();
 user.name; <span class="hljs-comment">// 'Michael Bolton'</span>
-</code></pre>
+
+<span class="hljs-comment">// invalid changes</span>
+updatedUser.name = <span class="hljs-string">'a'</span>;
+user.name; <span class="hljs-comment">// 'Billy Bob'</span>
+updatedUser.errors; <span class="hljs-comment">// [</span>
+<span class="hljs-comment">//   { key: 'name',</span>
+<span class="hljs-comment">//     messages: ['name must be more than 4 characters'],</span>
+<span class="hljs-comment">//     value: 'a'</span>
+<span class="hljs-comment">//   }</span>
+<span class="hljs-comment">// ]</span>
+updatedUser.flush();
+user.name; <span class="hljs-comment">// 'Billy Bob'</span></code></pre>
 				<h2 id="custom-validators">Custom validators</h2>
 				<p>A validator is a higher order function that returns a validation function. The validator can pass options to the validation function. The validation function is the function that is invoked when you set a value on the <code>BufferedProxy</code>.</p>
-				<p>Here&#39;s a simple example of creating a validator that validates if a value is of a given <code>type</code>:</p>
-				<pre><code class="lang-ts"><span class="hljs-keyword">import</span> { IValidatorFunc, ValidationResult } <span class="hljs-keyword">from</span> <span class="hljs-string">'validated-proxy'</span>;
+				<p>Here&#39;s an example of creating a validator that validates if a value is of a given <code>type</code>:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { ValidatorFunction, ValidationResult } <span class="hljs-keyword">from</span> <span class="hljs-string">'validated-proxy'</span>;
 
 <span class="hljs-keyword">type</span> Primitive =
   | <span class="hljs-string">'boolean'</span>
@@ -107,11 +118,11 @@ user.name; <span class="hljs-comment">// 'Michael Bolton'</span>
   | <span class="hljs-string">'null'</span>
   | <span class="hljs-string">'undefined'</span>;
 <span class="hljs-keyword">type</span> NonPrimitive = <span class="hljs-string">'object'</span>;
-<span class="hljs-keyword">interface</span> IValidatorOptions {
+<span class="hljs-keyword">interface</span> ValidatorOptions {
   <span class="hljs-keyword">type</span>: Primitive | NonPrimitive;
 }
 
-<span class="hljs-keyword">const</span> validateTypeof = ({ <span class="hljs-keyword">type</span> }: IValidatorOptions): <span class="hljs-function"><span class="hljs-params">IValidatorFunc</span> =&gt;</span> {
+<span class="hljs-keyword">const</span> validateTypeof = ({ <span class="hljs-keyword">type</span> }: ValidatorOptions): <span class="hljs-function"><span class="hljs-params">ValidatorFunction</span> =&gt;</span> {
   <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">key, newValue, oldValue</span>) =&gt;</span> {
     <span class="hljs-keyword">return</span> {
       message: <span class="hljs-string">`<span class="hljs-subst">${newValue}</span> is not of type '<span class="hljs-subst">${type}</span>'`</span>,
@@ -120,8 +131,50 @@ user.name; <span class="hljs-comment">// 'Michael Bolton'</span>
   };
 };
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> validateTypeof;
-</code></pre>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> validateTypeof;</code></pre>
+				<p>Now you can use your validator like so:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { validatedProxy } <span class="hljs-keyword">from</span> <span class="hljs-string">'validated-proxy'</span>;
+<span class="hljs-keyword">import</span> validateTypeof <span class="hljs-keyword">from</span> <span class="hljs-string">'../path/to/validateTypeof'</span>;
+
+<span class="hljs-keyword">const</span> user = { name: <span class="hljs-string">'Billy Bob'</span> };
+<span class="hljs-keyword">const</span> updatedUser = validatedProxy(user, {
+  validations: { name: validateTypeof({ <span class="hljs-keyword">type</span>: <span class="hljs-string">'string'</span> }) }
+});
+
+updatedUser.name = <span class="hljs-number">123</span>; <span class="hljs-comment">// error</span></code></pre>
+				<h3 id="custom-validator-type-safety">Custom validator type safety</h3>
+				<p>If you&#39;re creating a custom validator that relies on the new value to be of a certain type, you can specify it as a generic type parameter to <code>ValidatorFunction&lt;T&gt;</code> (where <code>T</code> is the type of your new value):</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { ValidatorFunction } <span class="hljs-keyword">from</span> <span class="hljs-string">'validated-proxy'</span>;
+
+<span class="hljs-keyword">interface</span> ValidatorOptions {
+  is: <span class="hljs-built_in">number</span>;
+}
+
+<span class="hljs-keyword">const</span> validateLength = ({
+  is
+}: ValidatorOptions): ValidatorFunction&lt;<span class="hljs-built_in">string</span>&gt; =&gt; {
+  <span class="hljs-keyword">return</span> <span class="hljs-function">(<span class="hljs-params">key, newValue, oldValue</span>) =&gt;</span> {
+    <span class="hljs-keyword">return</span> {
+      message: <span class="hljs-string">`<span class="hljs-subst">${key}</span> must be exactly <span class="hljs-subst">${is}</span> characters`</span>,
+      validation: is === newValue.length <span class="hljs-comment">// `newValue` is a `string`</span>
+    };
+  };
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> validateLength;</code></pre>
+				<p>More examples can be seen <a href="/test/support">here</a>.</p>
+				<h2 id="custom-error-handlers">Custom error handlers</h2>
+				<p>The error handler is a function that is called when an invalid value is set. This is in addition to the error that is already stored in the cache. By default, the error handler is a <code>no-op</code> (does nothing). You can specify a custom error handler; for example, you could log error messages, send them to a server, etc:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">const</span> proxy = validatedProxy(original, {
+  errorHandler: <span class="hljs-function"><span class="hljs-params">errorMessages</span> =&gt;</span> { <span class="hljs-comment">/** do something here **/</span>},
+  validations: <span class="hljs-comment">/** ... */</span>
+});</code></pre>
+				<h2 id="custom-execution-handlers">Custom execution handlers</h2>
+				<p>The execution handler is a function that is used to set the changes on the target object. By default, this is <code>Object.assign</code>. You can specify a custom execution handler; for example, you could use Lodash&#39;s <code>assign</code>, Ember&#39;s <code>set</code>, and so forth:</p>
+				<pre><code class="language-ts"><span class="hljs-keyword">const</span> proxy = validatedProxy(original, {
+  executionHandler: <span class="hljs-function">(<span class="hljs-params">target, changes</span>) =&gt;</span> { <span class="hljs-comment">/** do something here **/</span>},
+  validations: <span class="hljs-comment">/** ... */</span>
+});</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -134,64 +187,46 @@ user.name; <span class="hljs-comment">// 'Michael Bolton'</span>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/bufferedproxy.html" class="tsd-kind-icon">Buffered<wbr>Proxy</a>
 					</li>
-					<li class=" tsd-kind-class">
+					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/validationresult.html" class="tsd-kind-icon">Validation<wbr>Result</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/ibuffercache.html" class="tsd-kind-icon">IBuffer<wbr>Cache</a>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/bufferchange.html" class="tsd-kind-icon">Buffer<wbr>Change</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/buffererror.html" class="tsd-kind-icon">Buffer<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/bufferoptions.html" class="tsd-kind-icon">Buffer<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/validatedproxyoptions.html" class="tsd-kind-icon">Validated<wbr>Proxy<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/ibufferchange.html" class="tsd-kind-icon">IBuffer<wbr>Change</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/ibuffererror.html" class="tsd-kind-icon">IBuffer<wbr>Error</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/ibufferoptions.html" class="tsd-kind-icon">IBuffer<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/ivalidatedproxyoptions.html" class="tsd-kind-icon">IValidated<wbr>Proxy<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/ivalidationmap.html" class="tsd-kind-icon">IValidation<wbr>Map</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/ivalidationmeta.html" class="tsd-kind-icon">IValidation<wbr>Meta</a>
+						<a href="interfaces/validationmeta.html" class="tsd-kind-icon">Validation<wbr>Meta</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#buffererrorhandler" class="tsd-kind-icon">Buffer<wbr>Error<wbr>Handler</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="globals.html#bufferexecutionhandler" class="tsd-kind-icon">Buffer<wbr>Execution<wbr>Handler</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="globals.html#ivalidatorfunc" class="tsd-kind-icon">IValidator<wbr>Func</a>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#validationmap" class="tsd-kind-icon">Validation<wbr>Map</a>
 					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#defaultexecutionhandler" class="tsd-kind-icon">default<wbr>Execution<wbr>Handler</a>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#validatorfunction" class="tsd-kind-icon">Validator<wbr>Function</a>
 					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#defaultvalidatormessage" class="tsd-kind-icon">default<wbr>Validator<wbr>Message</a>
-					</li>
-					<li class=" tsd-kind-variable">
-						<a href="globals.html#defaultvalidatorvalidation" class="tsd-kind-icon">default<wbr>Validator<wbr>Validation</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#defaulterrorhandler" class="tsd-kind-icon">default<wbr>Error<wbr>Handler</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="globals.html#defaultvalidator" class="tsd-kind-icon">default<wbr>Validator</a>
-					</li>
-					<li class=" tsd-kind-function">
+					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#hasownproperty" class="tsd-kind-icon">has<wbr>Own<wbr>Property</a>
 					</li>
-					<li class=" tsd-kind-function">
+					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#validatedproxy" class="tsd-kind-icon">validated<wbr>Proxy</a>
 					</li>
-					<li class=" tsd-kind-function">
+					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#validatorlookup" class="tsd-kind-icon">validator<wbr>Lookup</a>
 					</li>
 				</ul>
