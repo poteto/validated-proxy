@@ -1,19 +1,18 @@
 import { check, gen, Generator, property } from 'testcheck';
 import validatorLookup, {
   defaultValidatorMessage,
-  IValidatorFunc
+  ValidatorFunction
 } from '../../src/utils/validator-lookup';
 import ValidationResult from '../../src/validation-result';
-import validatePresence from '../support/validate-presence';
 
-const validationResultGen: Generator<IValidatorFunc> = gen.boolean.then(
-  b => (key, value, _) => {
-    return {
-      message: `value is ${value}`,
-      validation: b
-    };
-  }
-);
+const validationResultGen: Generator<
+  ValidatorFunction<unknown>
+> = gen.boolean.then(b => (key, value, _) => {
+  return {
+    message: `value is ${value}`,
+    validation: b
+  };
+});
 
 describe('when a validator function is in the validation map', () => {
   it('returns the function', () => {

@@ -2,13 +2,13 @@ import BufferedProxy, {
   BufferErrorHandler,
   BufferExecutionHandler
 } from './buffered-proxy';
-import validatorLookup, { IValidationMap } from './utils/validator-lookup';
+import validatorLookup, { ValidationMap } from './utils/validator-lookup';
 import ValidationResult from './validation-result';
 
-export interface IValidatedProxyOptions {
-  executionHandler?: BufferExecutionHandler;
+export interface ValidatedProxyOptions<T> {
+  executionHandler?: BufferExecutionHandler<T>;
   errorHandler?: BufferErrorHandler;
-  validations: IValidationMap;
+  validations: ValidationMap<T>;
 }
 
 /**
@@ -50,9 +50,9 @@ export interface IValidatedProxyOptions {
  * @param target
  * @param validatedProxyOptions
  */
-export default function validatedProxy(
-  target: object,
-  { errorHandler, executionHandler, validations }: IValidatedProxyOptions
+export default function validatedProxy<T>(
+  target: T,
+  { errorHandler, executionHandler, validations }: ValidatedProxyOptions<T>
 ) {
   const buffer = new BufferedProxy(target, {
     errorHandler,
@@ -60,7 +60,8 @@ export default function validatedProxy(
   });
   return new Proxy(buffer, {
     get(targetBuffer, key, receiver) {
-      return targetBuffer.get(key.toString());
+      const res = targetBuffer.get(key.toString() as keyof T);
+      return res;
     },
     set(targetBuffer, key, value, receiver) {
       const stringifiedKey = key.toString();
@@ -72,7 +73,7 @@ export default function validatedProxy(
           validate(stringifiedKey, value, target[stringifiedKey])
         )
       );
-      targetBuffer.set(stringifiedKey, result);
+      targetBuffer.set(stringifiedKey as keyof T, result);
       return true;
     }
   });

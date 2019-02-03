@@ -1,27 +1,30 @@
 import { ValidKey } from '../buffered-proxy';
-import ValidationResult, { IValidationMeta } from '../validation-result';
+import { ValidationMeta } from '../validation-result';
+
 /**
- * Function signature for validator functions.
+ * Function signature for validator functions. Pass in a type parameter here to
+ * allow typechecking `newValue`.
  */
-export type IValidatorFunc = (
+export type ValidatorFunction<T = unknown> = (
   key: ValidKey,
-  newValue: any,
-  oldValue: any
-) => IValidationMeta;
+  newValue: T,
+  oldValue: unknown
+) => ValidationMeta;
 
 /**
  * A validation map is an object containing the mapping between the target
  * schema and validator functions.
  */
-export interface IValidationMap {
-  [key: string]: IValidatorFunc | IValidatorFunc[];
-}
+export type ValidationMap<T> = {
+  [K in keyof T]: ValidatorFunction<T[K]> | Array<ValidatorFunction<T[K]>>
+};
 
 /**
  * If no validator is found, this is the default message returned by the
  * validator function.
  *
  * @internal
+ * @ignore
  */
 export const defaultValidatorMessage = 'No validator found';
 
@@ -30,6 +33,7 @@ export const defaultValidatorMessage = 'No validator found';
  * validator function.
  *
  * @internal
+ * @ignore
  */
 export const defaultValidatorValidation = true;
 
@@ -37,8 +41,9 @@ export const defaultValidatorValidation = true;
  * If no validator is found, this is the default validator function.
  *
  * @internal
+ * @ignore
  */
-export const defaultValidator: IValidatorFunc = (key, value, oldValue) => {
+export const defaultValidator: ValidatorFunction<unknown> = () => {
   return {
     message: defaultValidatorMessage,
     validation: defaultValidatorValidation
@@ -58,16 +63,16 @@ export const defaultValidator: IValidatorFunc = (key, value, oldValue) => {
  *     validateLength({ gt: 2 })
  *   ]
  * };
- * validatorLookup(validationMap, 'foo'); // IValidatorFunc[]
+ * validatorLookup(validationMap, 'foo'); // ValidatorFunction[]
  * ```
  *
  * @param validations
  * @param key
  */
-export default function validatorLookup(
-  validations: IValidationMap,
+export default function validatorLookup<T, K extends keyof T>(
+  validations: ValidationMap<T>,
   key: ValidKey
-): IValidatorFunc[] {
+): Array<ValidatorFunction<T[K]>> {
   const validator = validations[key] || defaultValidator;
   return Array.isArray(validator) ? validator : [validator];
 }

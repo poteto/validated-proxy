@@ -1,5 +1,4 @@
-import { IValidatorFunc } from '../../src/utils/validator-lookup';
-import ValidationResult from '../../src/validation-result';
+import { ValidatorFunction } from '../../src/utils/validator-lookup';
 
 type Primitive =
   | 'boolean'
@@ -9,11 +8,11 @@ type Primitive =
   | 'null'
   | 'undefined';
 type NonPrimitive = 'object';
-interface IValidatorOptions {
+interface ValidatorOptions {
   type: Primitive | NonPrimitive;
 }
 
-const validateTypeof = ({ type }: IValidatorOptions): IValidatorFunc => {
+const validateTypeof = ({ type }: ValidatorOptions): ValidatorFunction => {
   return (key, newValue, oldValue) => {
     return {
       message: `${newValue} is not of type '${type}'`,

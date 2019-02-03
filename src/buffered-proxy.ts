@@ -1,37 +1,70 @@
 import hasOwnProperty from './utils/has-own-property';
 import ValidationResult from './validation-result';
 
+/**
+ * The error handler is a function that is called when an invalid value is set.
+ * This is in addition to the error *that is already stored in the cache. By
+ * default, the error handler is a `no-op` (does nothing). You can specify a
+ * custom error handler; for example, you could log error messages, send them to
+ * a server, etc:
+ *
+ * ```ts
+ * const proxy = validatedProxy(original, {
+ *   errorHandler: errorMessages => { // do something here },
+ *   validations: // ... });
+ * ```
+ */
 export type BufferErrorHandler = (messages: string[]) => void;
-export type BufferExecutionHandler = (
-  target: object,
-  changes: object
-) => object;
-export type ValidKey = string | number;
 
-export interface IBufferError {
+/**
+ * The execution handler is a function that is used to set the changes on the
+ * target object. By default, this is `Object.assign`. You can specify a custom
+ * execution handler; for example, you could use Lodash's `assign`, Ember's
+ * `set`, and so forth:
+ *
+ * ```ts
+ * const proxy = validatedProxy(original, {
+ *   executionHandler: (target, changes) => { // do something here },
+ *   validations: // ...
+ * });
+ * ```
+ */
+export type BufferExecutionHandler<T> = (
+  target: T,
+  changes: Partial<T>
+) => Partial<T>;
+
+/**
+ * @ignore
+ */
+export type ValidKey = string;
+
+export interface BufferError<T> {
   key: ValidKey;
-  value: any;
+  value: T;
   messages: string[];
 }
 
-export interface IBufferChange {
+export interface BufferChange<T> {
   key: ValidKey;
-  value: any;
+  value: T;
 }
 
-export interface IBufferOptions {
+export interface BufferOptions<T> {
   errorHandler?: BufferErrorHandler;
-  executionHandler?: BufferExecutionHandler;
+  executionHandler?: BufferExecutionHandler<T>;
 }
 
-export interface IBufferCache {
-  [key: string]: ValidationResult;
-}
+/**
+ * @ignore
+ */
+export type BufferCache<T> = { [K in keyof T]: ValidationResult<T[K]> };
 
 /**
  * If no execution handler is defined, this is the default.
  *
  * @internal
+ * @ignore
  */
 const defaultExecutionHandler = Object.assign;
 
@@ -39,6 +72,7 @@ const defaultExecutionHandler = Object.assign;
  * If no error handler is defined, this is the default.
  *
  * @internal
+ * @ignore
  */
 const defaultErrorHandler = () => {}; // tslint:disable-line no-empty
 
@@ -46,11 +80,10 @@ const defaultErrorHandler = () => {}; // tslint:disable-line no-empty
  * A `BufferedProxy` is a wrapper around a target object. Before values are
  * set on the `BufferedProxy`, they are first validated. If the result is valid,
  * we store the value in the cache. If it's not, we store it in our error cache.
- *
  * When ready, the `BufferedProxy` can be flushed, and the cached changes will
  * be set onto the target object with an overridable `executionHandler`.
  */
-export default class BufferedProxy {
+export default class BufferedProxy<T, K extends keyof T> {
   /**
    * Overridable error handler. Invoked when a `ValidationResult` is invalid.
    */
@@ -59,11 +92,21 @@ export default class BufferedProxy {
   /**
    * Overridable execution handler. Invoked when the `BufferedProxy` is flushed.
    */
-  public executionHandler: BufferExecutionHandler;
+  public executionHandler: BufferExecutionHandler<T>;
 
-  private target: object;
-  private ['__cache__']: IBufferCache = Object.create(null);
-  [key: string]: any;
+  private target: T;
+  private ['__cache__']: BufferCache<T> = Object.create(null);
+
+  /**
+   * Any property that is not one of the getter/setter/methods on the
+   * BufferedProxy instance. The value type is `unknown` in order to avoid
+   * having to predefine key/value pairs of the correct types in the target
+   * object. Setting the index signature to `[key: string]: T[K]` would allow us
+   * to typecheck the value that is set on the proxy. However, no
+   * getters/setters/methods can be added to the class. This is the tradeoff
+   * we make for this particular design pattern (class based BufferedProxy).
+   */
+  [key: string]: unknown;
 
   /**
    * Creates a new instance of `BufferedProxy`.
@@ -77,8 +120,8 @@ export default class BufferedProxy {
    * @param bufferOptions
    */
   constructor(
-    target: object,
-    { errorHandler, executionHandler }: IBufferOptions = {}
+    target: T,
+    { errorHandler, executionHandler }: BufferOptions<T> = {}
   ) {
     this.target = target;
     this.errorHandler = errorHandler || defaultErrorHandler;
@@ -92,7 +135,7 @@ export default class BufferedProxy {
    * bufferedProxy.changed; // { name: 'Lauren' };
    * ```
    */
-  public get changed(): object {
+  public get changed(): Partial<T> {
     return this.validResults.reduce((acc, { key, value }) => {
       acc[key] = value;
       return acc;
@@ -112,7 +155,7 @@ export default class BufferedProxy {
    * };
    * ```
    */
-  public get errored(): object {
+  public get errored(): { [key: string]: { value: T[K]; messages: string[] } } {
     return this.invalidResults.reduce((acc, { key, messages, value }) => {
       acc[key] = { messages, value };
       return acc;
@@ -126,7 +169,7 @@ export default class BufferedProxy {
    * bufferedProxy.changes; // [{ key: 'name', value: 'Lauren' }]
    * ```
    */
-  public get changes(): IBufferChange[] {
+  public get changes(): Array<BufferChange<T[K]>> {
     return this.validResults.map(({ key, value }) => {
       return { key, value };
     });
@@ -142,7 +185,7 @@ export default class BufferedProxy {
    * ]
    * ```
    */
-  public get errors(): IBufferError[] {
+  public get errors(): Array<BufferError<T[K]>> {
     return this.invalidResults.map(({ key, messages, value }) => {
       return { key, messages, value };
     });
@@ -170,11 +213,11 @@ export default class BufferedProxy {
    * @param key
    * @param validationResult
    */
-  public set(key: ValidKey, result: ValidationResult): ValidationResult {
+  public set(key: K, result: ValidationResult<T[K]>): ValidationResult<T[K]> {
     if (result.isInvalid) {
       this.errorHandler(result.messages);
     }
-    return this.updateCache(result);
+    return this.updateCache(key, result);
   }
 
   /**
@@ -190,10 +233,10 @@ export default class BufferedProxy {
    * user.name; // 'Lauren Elizabeth'
    * ```
    */
-  public flush(): object {
-    const flushed = this.executionHandler(this.target, this.changed);
+  public flush() {
+    console.log(this.target, this.changed); // tslint:disable-line
+    this.executionHandler(this.target, this.changed);
     this.reset();
-    return flushed;
   }
 
   /**
@@ -206,13 +249,16 @@ export default class BufferedProxy {
    *
    * @param key
    */
-  public get(key: ValidKey) {
+  public get(key: K): T[K] | unknown {
+    // return proxied values
     if (hasOwnProperty(this.cache, key)) {
       return this.cache[key].value;
     }
-    if (this[key]) {
-      return this[key];
+    // return getters/setters/methods on BufferedProxy instance
+    if (this[key as string]) {
+      return this[key as string];
     }
+    // return original value
     return this.target[key];
   }
 
@@ -233,16 +279,25 @@ export default class BufferedProxy {
     return this.__cache__;
   }
 
-  private updateCache(result: ValidationResult): ValidationResult {
-    this.cache[result.key] = result;
+  private updateCache(
+    key: K,
+    result: ValidationResult<T[K]>
+  ): ValidationResult<T[K]> {
+    this.cache[key] = result;
     return result;
   }
 
-  private get validResults(): ValidationResult[] {
-    return Object.values(this.cache).filter(r => r.isValid);
+  private get validResults() {
+    const cachedValidationResults = Object.values(this.cache) as Array<
+      ValidationResult<T[K]>
+    >;
+    return cachedValidationResults.filter(r => r.isValid);
   }
 
-  private get invalidResults(): ValidationResult[] {
-    return Object.values(this.cache).filter(r => r.isInvalid);
+  private get invalidResults() {
+    const cachedValidationResults = Object.values(this.cache) as Array<
+      ValidationResult<T[K]>
+    >;
+    return cachedValidationResults.filter(r => r.isInvalid);
   }
 }
