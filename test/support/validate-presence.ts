@@ -1,7 +1,6 @@
-import { IValidatorFunc } from '../../src/utils/validator-lookup';
-import ValidationResult from '../../src/validation-result';
+import { ValidatorFunction } from '../../src/utils/validator-lookup';
 
-const validatePresence = (): IValidatorFunc => {
+const validatePresence = (): ValidatorFunction => {
   return (key, newValue, oldValue) => {
     return {
       message: `${key} must be present`,

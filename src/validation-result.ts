@@ -1,6 +1,6 @@
-import { IBufferChange, IBufferError, ValidKey } from './buffered-proxy';
+import { ValidKey } from './buffered-proxy';
 
-export interface IValidationMeta {
+export interface ValidationMeta {
   validation: boolean;
   message: string;
 }
@@ -10,7 +10,7 @@ export interface IValidationMeta {
  * functions return an instance of this class, to allow for a single interface
  * when updating the state of a `BufferedProxy`.
  */
-export default class ValidationResult {
+export default class ValidationResult<T> {
   /**
    * The key being validated.
    *
@@ -27,7 +27,7 @@ export default class ValidationResult {
    * validatedResult.value; // 'Lauren'
    * ```
    */
-  public value: any;
+  public value: T;
 
   /**
    * Result of the validations.
@@ -40,7 +40,7 @@ export default class ValidationResult {
    * ];
    * ```
    */
-  public validations: IValidationMeta[];
+  public validations: ValidationMeta[];
 
   /**
    * Creates a new instance of `ValidationResult`.
@@ -55,7 +55,7 @@ export default class ValidationResult {
    * @param value
    * @param meta
    */
-  constructor(key: ValidKey, value: any, validations: IValidationMeta[]) {
+  constructor(key: ValidKey, value: T, validations: ValidationMeta[]) {
     this.key = key;
     this.value = value;
     this.validations = validations;

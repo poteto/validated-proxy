@@ -5,7 +5,7 @@ import ValidationResult from '../src/validation-result';
 describe('#set', () => {
   describe('when result is valid', () => {
     it('stores change internally', () => {
-      const original = { foo: 1 };
+      const original = { foo: 'a' };
       const buffer = new BufferedProxy(original);
       buffer.set(
         'foo',
@@ -23,7 +23,7 @@ describe('#set', () => {
 
   describe('when result is invalid', () => {
     it('stores error internally', () => {
-      const original = { foo: 1 };
+      const original = { foo: 'a' };
       const buffer = new BufferedProxy(original);
       buffer.set(
         'foo',
@@ -50,7 +50,7 @@ describe('#set', () => {
 
     it('invokes errorHandler if present', () => {
       const spyFunc = spy();
-      const original = { foo: 1 };
+      const original = { foo: 'a' };
       const buffer = new BufferedProxy(original, { errorHandler: spyFunc });
       buffer.set(
         'foo',
@@ -72,9 +72,9 @@ describe('#set', () => {
 
 describe('#get', () => {
   it('returns error, cached or original value', () => {
-    const original = { foo: 1, bar: 'abc', baz: [1, 2] };
+    const original = { foo: 'a', bar: 456, baz: [1, 2] };
     const buffer = new BufferedProxy(original);
-    expect(buffer.get('foo')).toBe(1);
+    expect(buffer.get('foo')).toBe('a');
     buffer.set(
       'foo',
       new ValidationResult('foo', 'abc', [
@@ -106,7 +106,7 @@ describe('#get', () => {
 
 describe('#flush', () => {
   it('sets value', () => {
-    const original = { foo: 1 };
+    const original = { foo: 'a' };
     const buffer = new BufferedProxy(original);
     buffer.set(
       'foo',
@@ -135,13 +135,13 @@ describe('#flush', () => {
       ])
     );
     buffer.flush();
-    expect(spyFunc.calledOnce).toBeTruthy();
+    expect(spyFunc.calledOnceWith(original, { foo: 'abc' })).toBeTruthy();
   });
 });
 
 describe('#reset', () => {
   it('resets all cached values', () => {
-    const original = { foo: 1 };
+    const original = { foo: 'a', bar: undefined };
     const buffer = new BufferedProxy(original);
     buffer.set(
       'foo',
@@ -164,13 +164,13 @@ describe('#reset', () => {
     expect(buffer.get('foo')).toBe('abc');
     expect(buffer.get('bar')).toEqual(123);
     buffer.reset();
-    expect(buffer.get('foo')).toBe(1);
+    expect(buffer.get('foo')).toBe('a');
   });
 });
 
 describe('getters', () => {
   describe('#changes/#changed', () => {
-    const original = { foo: 1 };
+    const original = { foo: 'a', bar: undefined };
     const buffer = new BufferedProxy(original);
     buffer.set(
       'foo',
@@ -200,7 +200,7 @@ describe('getters', () => {
   });
 
   describe('#errors/#errored', () => {
-    const original = { foo: 1 };
+    const original = { foo: 'a', bar: undefined };
     const buffer = new BufferedProxy(original);
     buffer.set(
       'foo',
