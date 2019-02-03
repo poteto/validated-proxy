@@ -1,4 +1,4 @@
-import sinon from 'sinon';
+import { spy } from 'sinon';
 import validatedProxy from '../src/validated-proxy';
 import validateTypeof from './support/validate-typeof';
 
@@ -29,14 +29,14 @@ describe('when setting a value on the proxy', () => {
   });
 
   it('invokes error handler if invalid', () => {
-    const spy = sinon.spy();
+    const spyFunc = spy();
     const original = { foo: 1 };
     const proxy = validatedProxy(original, {
-      errorHandler: spy,
+      errorHandler: spyFunc,
       validations: { foo: validateTypeof({ type: 'string' }) }
     });
     proxy.foo = null;
     expect(original.foo).toBe(1);
-    expect(spy.calledOnce).toBeTruthy();
+    expect(spyFunc.calledOnce).toBeTruthy();
   });
 });

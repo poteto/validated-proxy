@@ -1,10 +1,10 @@
+import { ValidKey } from '../buffered-proxy';
 import ValidationResult, { IValidationMeta } from '../validation-result';
-
 /**
  * Function signature for validator functions.
  */
 export type IValidatorFunc = (
-  key: PropertyKey,
+  key: ValidKey,
   newValue: any,
   oldValue: any
 ) => IValidationMeta;
@@ -66,7 +66,7 @@ export const defaultValidator: IValidatorFunc = (key, value, oldValue) => {
  */
 export default function validatorLookup(
   validations: IValidationMap,
-  key: PropertyKey
+  key: ValidKey
 ): IValidatorFunc[] {
   const validator = validations[key] || defaultValidator;
   return Array.isArray(validator) ? validator : [validator];

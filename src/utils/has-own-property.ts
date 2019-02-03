@@ -1,3 +1,5 @@
+import { ValidKey } from '../buffered-proxy';
+
 /**
  * Shorthand for `Object.prototype.hasOwnProperty`. Returns a boolean indicating
  * whether the object has the specified property as own (not inherited)
@@ -12,7 +14,7 @@
  */
 export default function hasOwnProperty(
   obj: object,
-  ...args: PropertyKey[]
+  ...args: ValidKey[]
 ): boolean {
   return Object.prototype.hasOwnProperty.apply(obj, args);
 }
