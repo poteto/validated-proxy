@@ -50,8 +50,10 @@ user.name; // 'Michael Bolton'
 // invalid changes
 updatedUser.name = 'a';
 user.name; // 'Billy Bob'
-updatedUser.errors; // [
-//   { key: 'name',
+updatedUser.errors;
+// [
+//   {
+//     key: 'name',
 //     messages: ['name must be more than 4 characters'],
 //     value: 'a'
 //   }
@@ -145,7 +147,10 @@ interface User {
 const user: Partial<User> = { age: 21 };
 const updatedUser = validatedProxy(user, {
   validations: {
-    age: validateLength({ is: 3 }) // [ts] Type 'ValidatorFunction<string>' is not assignable to type 'ValidatorFunction<number> | ValidatorFunction<number>[]'.
+    age: validateLength({ is: 3 }) // [ts] Type 'ValidatorFunction<string>'
+                                   // is not assignable to type
+                                   // 'ValidatorFunction<number> |
+                                   // ValidatorFunction<number>[]'.
   }
 })
 ```
