@@ -108,7 +108,7 @@ user.name; <span class="hljs-comment">// 'Billy Bob'</span></code></pre>
 				<h2 id="custom-validators">Custom validators</h2>
 				<p>A validator is a higher order function that returns a validation function. The validator can pass options to the validation function. The validation function is the function that is invoked when you set a value on the <code>BufferedProxy</code>.</p>
 				<p>Here&#39;s an example of creating a validator that validates if a value is of a given <code>type</code>:</p>
-				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { ValidatorFunction, ValidationResult } <span class="hljs-keyword">from</span> <span class="hljs-string">'validated-proxy'</span>;
+				<pre><code class="language-ts"><span class="hljs-keyword">import</span> { ValidatorFunction } <span class="hljs-keyword">from</span> <span class="hljs-string">'validated-proxy'</span>;
 
 <span class="hljs-keyword">type</span> Primitive =
   | <span class="hljs-string">'boolean'</span>
@@ -164,7 +164,7 @@ updatedUser.name = <span class="hljs-number">123</span>; <span class="hljs-comme
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> validateLength;</code></pre>
 				<p>More examples can be seen <a href="/test/support">here</a>.</p>
 				<h2 id="custom-error-handlers">Custom error handlers</h2>
-				<p>The error handler is a function that is called when an invalid value is set. This is in addition to the error that is already stored in the cache. By default, the error handler is a <code>no-op</code> (does nothing). You can specify a custom error handler; for example, you could log error messages, send them to a server, etc:</p>
+				<p>The error handler is a function that is called when an invalid value is set. This is in addition to the error that is already stored in the cache. By default, the error handler is a <code>no-op</code> (does nothing). You can specify a custom error handler; for example, you could throw an error, log error messages, send them to a server, etc:</p>
 				<pre><code class="language-ts"><span class="hljs-keyword">const</span> proxy = validatedProxy(original, {
   errorHandler: <span class="hljs-function"><span class="hljs-params">errorMessages</span> =&gt;</span> { <span class="hljs-comment">/** do something here **/</span>},
   validations: <span class="hljs-comment">/** ... */</span>
@@ -201,6 +201,9 @@ updatedUser.name = <span class="hljs-number">123</span>; <span class="hljs-comme
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/bufferoptions.html" class="tsd-kind-icon">Buffer<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/unknownobject.html" class="tsd-kind-icon">Unknown<wbr>Object</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/validatedproxyoptions.html" class="tsd-kind-icon">Validated<wbr>Proxy<wbr>Options</a>
