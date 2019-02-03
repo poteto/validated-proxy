@@ -132,6 +132,24 @@ const validateLength = ({
 export default validateLength;
 ```
 
+When a custom `ValidatorFunction` is narrowed to a certain type, it will not typecheck if you try to use the function against a key on the original object that does not have the same value type. For example, the `validateLength` validator only works on `strings` (`number` does not have the `length` property):
+
+```ts
+import validateLength from '../path/to/validateLength';
+
+interface User {
+  name: string;
+  age: number;
+}
+
+const user: Partial<User> = { age: 21 };
+const updatedUser = validatedProxy(user, {
+  validations: {
+    age: validateLength({ is: 3 }) // [ts] Type 'ValidatorFunction<string>' is not assignable to type 'ValidatorFunction<number> | ValidatorFunction<number>[]'.
+  }
+})
+```
+
 More examples can be seen [here](/test/support).
 
 ## Custom error handlers
